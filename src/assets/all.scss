@@ -1,0 +1,12 @@
+@import '~bootstrap/scss/functions';
+@import 'venders/variables'; // BS5
+@import '~bootstrap/scss/bootstrap';
+
+@import 'abstracts/variables'; // Custom
+@import 'abstracts/mixins';
+
+@import 'base/base';
+@import 'base/animations';
+
+@import 'layout/home';
+@import 'layout/dashbord';
