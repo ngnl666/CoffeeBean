@@ -6,6 +6,7 @@ import store from './store';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'animate.css';
+import 'hover.css';
 import 'bootstrap';
 
 router.beforeEach((to, from, next) => {
