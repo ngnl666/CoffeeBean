@@ -1,8 +1,9 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
 
-export default createStore({
-  state: {
+const moduleAdmin = {
+  namespaced: true,
+  state: () => ({
     products: [],
     coupons: [],
     orders: [],
@@ -10,8 +11,7 @@ export default createStore({
     isLoading: false,
     alertMsg: '',
     isAlert: false,
-  },
-  getters: {},
+  }),
   mutations: {
     setProducts(state, payload) {
       state.products = payload;
@@ -94,5 +94,25 @@ export default createStore({
         .catch(error => console.log(error.message));
     },
   },
-  modules: {},
+};
+
+const moduleFrontPage = {
+  namespaced: true,
+  state: () => ({
+    bgActive: false,
+  }),
+  mutations: {
+    setBgActive(state, payload) {
+      state.bgActive = payload;
+    },
+  },
+  actions: {},
+};
+
+export default createStore({
+  state: {},
+  getters: {},
+  mutations: {},
+  actions: {},
+  modules: { moduleAdmin, moduleFrontPage },
 });

@@ -1,33 +1,41 @@
 <template>
-  <div class="navigation">
+  <div class="navigation" :class="{ 'navigation-color': bgActive }">
     <h1 class="navigation__box">
       <a class="navigation__logo" href="#">CoffeeBean</a>
     </h1>
 
     <ul class="navigation__list">
       <li>
-        <a
-          class="navigation__link hvr-underline-from-center"
-          href="#"
-          >HOME</a
+        <router-link to="/" class="navigation__link hvr-underline-from-center"
+          >HOME</router-link
         >
       </li>
-      <li><a class="navigation__link hvr-underline-from-center" href="#">SHOP</a></li>
       <li>
-        <a class="navigation__link hvr-forward" href="#">
-          <i class="navigation__icon--white fas fa-shopping-cart"></i>
-        </a>
+        <router-link
+          to="/shop"
+          class="navigation__link hvr-underline-from-center"
+          >SHOP</router-link
+        >
+      </li>
+      <li>
+        <router-link to="/cart" class="navigation__link hvr-forward"
+          ><i class="navigation__icon--white fas fa-shopping-cart"></i
+        ></router-link>
       </li>
     </ul>
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 export default {
   data() {
     return {};
   },
-  created() {},
+  computed: {
+    ...mapState('moduleFrontPage', ['bgActive']),
+  },
 };
 </script>
 
@@ -36,7 +44,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
 
 .navigation {
-  background-color: rgba(152, 106, 75, 0.8);
+  background-color: transparent;
   position: fixed;
   left: 0;
   right: 0;
@@ -45,6 +53,11 @@ export default {
   align-items: center;
   padding: 0.35rem 1.5rem;
   z-index: 99;
+  transition: 0.5s;
+
+  &-color {
+    background-color: rgba(152, 106, 75, 0.8);
+  }
 
   &__logo {
     font-family: 'Alex Brush', cursive;

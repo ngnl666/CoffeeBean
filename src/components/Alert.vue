@@ -11,7 +11,7 @@ export default {
   name: 'Alert',
   computed: {
     alertMsg() {
-      return this.$store.state.alertMsg;
+      return this.$store.state.moduleAdmin.alertMsg;
     },
   },
 };

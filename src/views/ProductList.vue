@@ -304,7 +304,7 @@ export default {
     Pagination,
   },
   computed: {
-    ...mapState(['isAlert', 'products', 'isLoading']),
+    ...mapState('moduleAdmin', ['isAlert', 'products', 'isLoading']),
     enabledProducts() {
       return this.isEnabled
         ? this.products.filter(p => p.is_enabled)
@@ -312,8 +312,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getProducts']),
-    ...mapMutations(['setAlertMsg', 'setIsAlert']),
+    ...mapActions('moduleAdmin', ['getProducts']),
+    ...mapMutations('moduleAdmin', ['setAlertMsg', 'setIsAlert']),
     openProductModal(isNew, item) {
       if (isNew) {
         this.tempProduct = {};

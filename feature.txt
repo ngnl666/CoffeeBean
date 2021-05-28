@@ -6,3 +6,7 @@
 3) return guard
 
 4) vuex 共同狀態管理
+
+5) intersection observer
+
+6) 破圖假圖

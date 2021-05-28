@@ -62,10 +62,10 @@ export default {
     Pagination,
   },
   computed: {
-    ...mapState(['isLoading', 'orders']),
+    ...mapState('moduleAdmin', ['isLoading', 'orders']),
   },
   created() {
-    this.$store.dispatch('getOrders');
+    this.$store.dispatch('moduleAdmin/getOrders');
   },
 };
 </script>

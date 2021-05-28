@@ -98,6 +98,7 @@
             <label class="my-1" for="code">優惠碼</label>
             <input
               v-model="tempCoupon.code"
+              min="2021-05-27"
               class="form-control"
               id="code"
               type="text"
@@ -118,6 +119,7 @@
             <label class="my-1" for="date">到期日</label>
             <input
               v-model="date"
+              ref="couponDate"
               class="form-control"
               id="date"
               type="date"
@@ -221,7 +223,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(['coupons', 'isAlert', 'isLoading']),
+    ...mapState('moduleAdmin', ['coupons', 'isAlert', 'isLoading']),
     enabledCoupons() {
       return this.isEnabled
         ? this.coupons.filter(p => p.is_enabled)
@@ -229,8 +231,8 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['getCoupons']),
-    ...mapMutations(['setAlertMsg', 'setIsAlert']),
+    ...mapActions('moduleAdmin', ['getCoupons']),
+    ...mapMutations('moduleAdmin', ['setAlertMsg', 'setIsAlert']),
     openCouponModal(isNew, item) {
       if (isNew) {
         this.tempCoupon = {};

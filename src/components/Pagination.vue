@@ -41,11 +41,11 @@ export default {
   name: 'Pagination',
   computed: {
     pagination() {
-      return this.$store.state.pagination;
+      return this.$store.state.moduleAdmin.pagination;
     },
   },
   methods: {
-    ...mapActions(['getProducts', 'getCoupons']),
+    ...mapActions('moduleAdmin', ['getProducts', 'getCoupons']),
     updatePage(page) {
       if (this.$route.name === 'ProductList') this.getProducts(page);
       if (this.$route.name === 'Coupon') this.getCoupons(page);
