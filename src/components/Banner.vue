@@ -122,7 +122,7 @@ export default {};
     }
 
     span {
-      color: $color-tertiary;
+      color: $color-green;
       font-weight: bold;
       padding: 0 3px;
     }

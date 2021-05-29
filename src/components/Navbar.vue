@@ -18,6 +18,11 @@
         >
       </li>
       <li>
+        <router-link to="/pick" class="navigation__link navigation__link--pick"
+          ><i class="navigation__icon--white fas fa-coffee"></i
+        ></router-link>
+      </li>
+      <li>
         <router-link to="/cart" class="navigation__link hvr-forward"
           ><i class="navigation__icon--white fas fa-shopping-cart"></i
         ></router-link>
@@ -73,7 +78,7 @@ export default {
     color: $color-white;
     font-size: 1.25rem;
     font-weight: bold;
-    margin-left: 1.5rem;
+    margin-right: 1.5rem;
     letter-spacing: 2px;
     padding-top: 0.5rem;
     transition: all 0.25s;
@@ -81,6 +86,25 @@ export default {
     &:hover {
       color: $color-blue;
     }
+
+    &--pick {
+      margin-right: 2rem;
+      transition: 0.75s;
+      &:hover {
+        transform: rotateY(180deg);
+      }
+    }
+  }
+}
+
+@keyframes flip {
+  0% {
+    opacity: 0;
+    bottom: 4%;
+  }
+  100% {
+    opacity: 1;
+    bottom: 7%;
   }
 }
 </style>

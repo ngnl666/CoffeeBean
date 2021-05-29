@@ -1,4 +1,59 @@
 .shop {
   padding: 1.5rem 3rem;
   background-color: $color-secondary;
+
+  &__nav {
+    margin-bottom: 2rem;
+  }
+
+  &__sidebar {
+    width: 20%;
+    background-color: $color-tertiary;
+    border: 2px solid $color-primary;
+    padding: 1rem 0;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  &__list {
+    color: $color-white;
+    padding: 0;
+    margin: 0;
+
+    li {
+      font-size: $font-m;
+      padding: 0.5rem 2rem;
+    }
+
+    &--inner {
+      margin-top: 0.5rem;
+      padding: 0;
+      transition: all 1s;
+      display: none;
+
+      li {
+        display: block;
+        font-size: $font-s;
+        padding: 0.5rem 0;
+        transition: 1s;
+
+        &:hover {
+          color: $color-blue;
+        }
+
+        &:active {
+          transform: translateX(-50%);
+        }
+      }
+    }
+  }
+}
+
+.active {
+  display: block;
+}
+
+.activeList {
+  transition: 1s;
+  background-color: $color-primary;
 }

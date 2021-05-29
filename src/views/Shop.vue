@@ -2,55 +2,88 @@
   <Navbar />
   <Banner />
   <main class="shop">
-    <nav class="shop__nav" aria-label="breadcrumb">
+    <nav class="shop__nav">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-          <router-link to="/shop">TOP</router-link>
+        <li class="breadcrumb-item">TOP</li>
+        <li v-if="activeList" class="breadcrumb-item active">
+          {{ activeList }}
         </li>
-        <li class="breadcrumb-item active" aria-current="page">Library</li>
+        <li v-if="activeItem" class="breadcrumb-item active">
+          {{ activeItem }}
+        </li>
       </ol>
     </nav>
 
-    <div class="container">
-      <div class="row">
-        <div class="shop__list">
-          <ul class="list-group">
+    <div class="shop__sidebar">
+      <ul class="shop__list" ref="shop__list">
+        <li
+          @click="activeList = 'all'"
+          :class="{ activeList: activeList === 'all' }"
+          class="shop__listItem"
+        >
+          所有商品
+        </li>
+        <li
+          @click="activeList = 'coffeebean'"
+          :class="{ activeList: activeList === 'coffeebean' }"
+          class="shop__listItem"
+        >
+          咖啡豆
+          <ul
+            class="shop__list--inner"
+            :class="{ active: activeList === 'coffeebean' }"
+          >
             <li
-              class="
-                list-group-item
-                d-flex
-                justify-content-between
-                align-items-center
-              "
+              v-for="(item, key) in dataList.coffeebean"
+              :key="key"
+              @click="activeItem = item"
             >
-              A list item
-              <span class="badge bg-primary rounded-pill">14</span>
-            </li>
-            <li
-              class="
-                list-group-item
-                d-flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              A second list item
-              <span class="badge bg-primary rounded-pill">2</span>
-            </li>
-            <li
-              class="
-                list-group-item
-                d-flex
-                justify-content-between
-                align-items-center
-              "
-            >
-              A third list item
-              <span class="badge bg-primary rounded-pill">1</span>
+              <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
+              {{ item }}
             </li>
           </ul>
-        </div>
-      </div>
+        </li>
+        <li
+          @click="activeList = 'equipment'"
+          :class="{ activeList: activeList === 'equipment' }"
+          class="shop__listItem"
+        >
+          咖啡設備
+          <ul
+            class="shop__list--inner"
+            :class="{ active: activeList === 'equipment' }"
+          >
+            <li
+              v-for="item in dataList.equipment"
+              :key="item"
+              @click="activeItem = item"
+            >
+              <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
+              {{ item }}
+            </li>
+          </ul>
+        </li>
+        <li
+          @click="activeList = 'collection'"
+          :class="{ activeList: activeList === 'collection' }"
+          class="shop__listItem"
+        >
+          典藏商品
+          <ul
+            class="shop__list--inner"
+            :class="{ active: activeList === 'collection' }"
+          >
+            <li
+              v-for="item in dataList.collection"
+              :key="item"
+              @click="activeItem = item"
+            >
+              <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
+              {{ item }}
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
   </main>
   <Footer />
@@ -70,9 +103,17 @@ export default {
   },
   data() {
     return {
+      dataList: {
+        coffeebean: ['淺培', '中培', '深培'],
+        equipment: ['手沖 / 磨豆', '半自動'],
+        collection: ['生活用品', '隨行杯'],
+      },
+      activeList: '',
+      activeItem: '',
       bgActive: false,
     };
   },
+  computed: {},
   methods: {
     ...mapMutations('moduleFrontPage', ['setBgActive']),
     handleScroll() {
