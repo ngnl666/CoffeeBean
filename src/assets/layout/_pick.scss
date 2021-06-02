@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
+
+.pick {
+  padding: 6rem 3rem;
+  background-color: $color-secondary;
+  overflow: hidden;
+
+  &__group {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  &__card {
+    width: 18rem;
+    height: 25rem;
+    background: #2e1d0e;
+    border-radius: 10px;
+    position: relative;
+
+    &-1:hover,
+    &-2:hover,
+    &-3:hover {
+      box-shadow: 0 0 5px rgba(67, 232, 216, 1), 0 0 10px rgba(67, 232, 216, 1),
+        0 0 20px rgba(67, 232, 216, 1), 0 0 40px rgba(67, 232, 216, 1);
+    }
+
+    &-1 {
+      animation: bounce-down 1.6s linear infinite;
+    }
+    &-2 {
+      animation: bounce-down 1.6s linear infinite 0.5s;
+    }
+    &-3 {
+      animation: bounce-down 1.6s linear infinite 1s;
+    }
+  }
+
+  &__title {
+    color: $color_white;
+    font-size: $font-xl;
+    font-family: 'Alex Brush', cursive;
+    @include absCenter(35%);
+  }
+
+  &__icon {
+    color: $color-white;
+    font-size: $font-xl;
+    @include absCenter(60%);
+  }
+}
+
+.pickNone {
+  opacity: 0;
+  transition: 1.5s;
+}
+
+@keyframes bounce-down {
+  25% {
+    transform: translateY(-4px);
+  }
+  50%,
+  100% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(4px);
+  }
+}

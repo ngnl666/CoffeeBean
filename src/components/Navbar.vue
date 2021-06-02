@@ -1,7 +1,7 @@
 <template>
   <div class="navigation" :class="{ 'navigation-color': bgActive }">
     <h1 class="navigation__box">
-      <a class="navigation__logo" href="#">CoffeeBean</a>
+      <router-link to="/" class="navigation__logo">CoffeeBean</router-link>
     </h1>
 
     <ul class="navigation__list">

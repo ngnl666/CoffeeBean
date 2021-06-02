@@ -4,86 +4,103 @@
   <main class="shop">
     <nav class="shop__nav">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">TOP</li>
-        <li v-if="activeList" class="breadcrumb-item active">
-          {{ activeList }}
-        </li>
-        <li v-if="activeItem" class="breadcrumb-item active">
-          {{ activeItem }}
+        <li class="breadcrumb-item">SHOP</li>
+        <li
+          v-for="item in breadcrumbList"
+          :key="item"
+          class="breadcrumb-item active"
+        >
+          {{ item }}
         </li>
       </ol>
+
+      <div class="shop__myFav">
+        <router-link to="/favorite" class="myBtn myBtn--blue"
+          >我的收藏</router-link
+        >
+      </div>
     </nav>
 
-    <div class="shop__sidebar">
-      <ul class="shop__list" ref="shop__list">
-        <li
-          @click="activeList = 'all'"
-          :class="{ activeList: activeList === 'all' }"
-          class="shop__listItem"
-        >
-          所有商品
-        </li>
-        <li
-          @click="activeList = 'coffeebean'"
-          :class="{ activeList: activeList === 'coffeebean' }"
-          class="shop__listItem"
-        >
-          咖啡豆
-          <ul
-            class="shop__list--inner"
-            :class="{ active: activeList === 'coffeebean' }"
+    <div class="shop__main">
+      <div class="shop__sidebar">
+        <ul class="shop__list" ref="shop__list">
+          <li
+            @click="activeList = '所有商品'"
+            :class="{ activeList: activeList === '所有商品' }"
+            class="shop__listItem"
           >
-            <li
-              v-for="(item, key) in dataList.coffeebean"
-              :key="key"
-              @click="activeItem = item"
-            >
-              <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
-              {{ item }}
-            </li>
-          </ul>
-        </li>
-        <li
-          @click="activeList = 'equipment'"
-          :class="{ activeList: activeList === 'equipment' }"
-          class="shop__listItem"
-        >
-          咖啡設備
-          <ul
-            class="shop__list--inner"
-            :class="{ active: activeList === 'equipment' }"
+            所有商品
+          </li>
+          <li
+            @click="activeList = '咖啡豆'"
+            :class="{ activeList: activeList === '咖啡豆' }"
+            class="shop__listItem"
           >
-            <li
-              v-for="item in dataList.equipment"
-              :key="item"
-              @click="activeItem = item"
+            咖啡豆
+            <ul
+              class="shop__list--inner"
+              :class="{ active: activeList === '咖啡豆' }"
             >
-              <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
-              {{ item }}
-            </li>
-          </ul>
-        </li>
-        <li
-          @click="activeList = 'collection'"
-          :class="{ activeList: activeList === 'collection' }"
-          class="shop__listItem"
-        >
-          典藏商品
-          <ul
-            class="shop__list--inner"
-            :class="{ active: activeList === 'collection' }"
+              <li
+                v-for="(item, key) in dataList.coffeebean"
+                :key="key"
+                @click="activeItem = item"
+              >
+                <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
+                {{ item }}
+              </li>
+            </ul>
+          </li>
+          <li
+            @click="activeList = '咖啡設備'"
+            :class="{ activeList: activeList === '咖啡設備' }"
+            class="shop__listItem"
           >
-            <li
-              v-for="item in dataList.collection"
-              :key="item"
-              @click="activeItem = item"
+            咖啡設備
+            <ul
+              class="shop__list--inner"
+              :class="{ active: activeList === '咖啡設備' }"
             >
-              <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
-              {{ item }}
-            </li>
-          </ul>
-        </li>
-      </ul>
+              <li
+                v-for="item in dataList.equipment"
+                :key="item"
+                @click="activeItem = item"
+              >
+                <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
+                {{ item }}
+              </li>
+            </ul>
+          </li>
+          <li
+            @click="activeList = '典藏商品'"
+            :class="{ activeList: activeList === '典藏商品' }"
+            class="shop__listItem"
+          >
+            典藏商品
+            <ul
+              class="shop__list--inner"
+              :class="{ active: activeList === '典藏商品' }"
+            >
+              <li
+                v-for="item in dataList.collection"
+                :key="item"
+                @click="activeItem = item"
+              >
+                <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
+                {{ item }}
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="shop__products">
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+        <Card />
+      </div>
     </div>
   </main>
   <Footer />
@@ -93,13 +110,15 @@
 import { mapMutations } from 'vuex';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
+import Card from '../components/Card.vue';
 import Footer from '../components/Footer.vue';
 
 export default {
   components: {
     Navbar,
-    Footer,
     Banner,
+    Card,
+    Footer,
   },
   data() {
     return {
@@ -108,12 +127,24 @@ export default {
         equipment: ['手沖 / 磨豆', '半自動'],
         collection: ['生活用品', '隨行杯'],
       },
+      breadcrumbList: [],
       activeList: '',
       activeItem: '',
       bgActive: false,
     };
   },
-  computed: {},
+  computed: {
+    breadcrumbPair() {
+      return [this.activeList, this.activeItem];
+    },
+  },
+  watch: {
+    breadcrumbPair(val, oldVal) {
+      val[0] !== oldVal[0]
+        ? (this.breadcrumbList = [val[0]])
+        : (this.breadcrumbList = this.breadcrumbPair);
+    },
+  },
   methods: {
     ...mapMutations('moduleFrontPage', ['setBgActive']),
     handleScroll() {

@@ -18,6 +18,7 @@ router.beforeEach((to, from, next) => {
       .catch(error => console.log(error.message));
   } else {
     next();
+    window.scroll(0, 0);
   }
 });
 
