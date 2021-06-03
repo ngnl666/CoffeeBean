@@ -33,6 +33,7 @@
   }
 
   &__in {
+    font-size: $font-s;
     text-align: center;
   }
 
@@ -118,6 +119,7 @@
   &__description {
     color: $color-white;
     font-size: $font-m;
+    letter-spacing: 3px;
 
     &-1,
     &-3 {

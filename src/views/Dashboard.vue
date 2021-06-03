@@ -1,4 +1,5 @@
-<template lang="">
+<template>
+  <Alert v-if="isAlert" />
   <header
     class="navbar navbar-dark sticky-top bg-success flex-md-nowrap p-0 shadow"
   >
@@ -60,21 +61,38 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
+import Alert from '../components/Alert.vue';
+
 export default {
+  components: {
+    Alert,
+  },
   name: 'Dashboard',
   methods: {
+    ...mapMutations('moduleAdmin', ['setAlertMsg', 'setIsAlert']),
     signout() {
+      const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
 
       this.$http
         .post(api)
         .then(res => {
-          if (res.data.success) {
-            this.$router.push('/login');
+          if (!res.data.success) {
+            vm.setAlertMsg('登出失敗');
+            return;
           }
+          this.$router.push('/login');
         })
         .catch(error => console.log(error.message));
     },
+    setAlertMsg(msg) {
+      this.setAlertMsg(msg);
+      this.setIsAlert();
+    },
+  },
+  computed: {
+    ...mapState('moduleAdmin', ['isAlert']),
   },
   created() {
     const token = document.cookie.replace(

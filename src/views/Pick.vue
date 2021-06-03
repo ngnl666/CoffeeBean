@@ -38,11 +38,17 @@
       </div>
     </div>
 
-    <div class="modal pickCard__modal" tabindex="-1" ref="pickCardModal">
+    <div
+      class="modal pickCard__modal animate__animated animate__fadeInDown"
+      tabindex="-1"
+      ref="pickCardModal"
+    >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Modal title</h5>
+            <h5 class="modal-title">
+              恭喜獲得 <span class="text-danger">50% off</span> 優惠卷
+            </h5>
             <button
               type="button"
               class="btn-close"
@@ -51,17 +57,8 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p>Modal body text goes here.</p>
-          </div>
-          <div class="modal-footer">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              data-bs-dismiss="modal"
-            >
-              Close
-            </button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <p class="fs-4">優惠碼:</p>
+            <p class="fs-3 fw-bold text-center text-success">ABC123</p>
           </div>
         </div>
       </div>

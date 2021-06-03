@@ -1,4 +1,5 @@
 <template>
+  <Alert v-if="isAlert" />
   <div class="text-center">e3e38888@gmail.com</div>
   <div class="text-center">asdf5678</div>
 
@@ -49,8 +50,13 @@
 </template>
 
 <script>
+import { mapMutations, mapState } from 'vuex';
+import Alert from '../components/Alert.vue';
 export default {
   name: 'Login',
+  components: {
+    Alert,
+  },
   data() {
     return {
       user: {
@@ -60,6 +66,7 @@ export default {
     };
   },
   methods: {
+    ...mapMutations('moduleAdmin', ['setAlertMsg', 'setIsAlert']),
     signin() {
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       var vm = this;
@@ -68,7 +75,7 @@ export default {
         .post(api, vm.user)
         .then(res => {
           if (!res.data.success) {
-            console.log('-- 登入失敗 --');
+            vm.setAlertMsg('登入失敗');
             return;
           }
           const { token, expired } = res.data;
@@ -77,6 +84,13 @@ export default {
         })
         .catch(error => console.log(error.message));
     },
+    setAlertMsg(msg) {
+      this.setAlertMsg(msg);
+      this.setIsAlert();
+    },
+  },
+  computed: {
+    ...mapState('moduleAdmin', ['isAlert']),
   },
 };
 </script>

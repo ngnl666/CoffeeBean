@@ -14,6 +14,7 @@
     width: 18rem;
     height: 25rem;
     background: #2e1d0e;
+    box-shadow: 0 3.5rem 1rem rgba($color-black, 0.2);
     border-radius: 10px;
     position: relative;
 
@@ -47,10 +48,14 @@
     font-size: $font-xl;
     @include absCenter(60%);
   }
+
+  &__discount {
+  }
 }
 
 .pickNone {
   opacity: 0;
+  visibility: hidden;
   transition: 1.5s;
 }
 

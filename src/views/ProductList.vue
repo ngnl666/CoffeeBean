@@ -378,6 +378,7 @@ export default {
           },
         })
         .then(res => {
+          console.log(res);
           if (!res.data.success) {
             vm.setAlertMsg(res.data.message);
             vm.status.fileUploading = false;

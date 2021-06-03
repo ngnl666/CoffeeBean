@@ -27,7 +27,7 @@
           <div class="intro__pic">
             <img src="../assets/image/intro-3.jpg" alt="coffeBean" />
           </div>
-          <p class="intro__in">專業的義式咖啡機萃取出迷人香氣的 Espresso</p>
+          <p class="intro__in">專業級義式咖啡機萃取出香氣迷人的 Espresso</p>
         </li>
       </ul>
     </section>
@@ -35,18 +35,16 @@
     <main class="main">
       <div class="main__section main__section-1">
         <div class="main__box--left-1">
-          <h3 class="main__topic main__topic-1">
+          <h3 class="main__topic main__topic-1 fst-italic">
             選豆
             <span>Beans</span>
           </h3>
           <p class="main__description main__description-1">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-            ratione nemo quod incidunt, facilis exercitationem minima eveniet
-            veritatis voluptates mollitia magnam accusantium qui esse
-            consequatur officia cumque itaque ducimus, necessitatibus culpa
-            veniam? Itaque debitis ut esse doloribus. Repellat, veniam est
-            voluptates numquam vero quis accusantium dolor ratione officia.
-            Voluptates, assumenda!
+            堅持進口咖啡原產地的豆子，嚴格把關每批生豆的含水率、顏色及密度，採用標準化
+            SCAA 杯測方式，將其<span class="text-secondary"
+              >香氣、餘韻、酸值、乾淨度 . . .</span
+            >
+            等十大指標列為評測分級標準，為的就是能讓每一位客人品嘗到最完美的咖啡
           </p>
         </div>
         <div class="main__box--right-1"></div>
@@ -54,35 +52,37 @@
       <div class="main__section main__section-2">
         <div class="main__box--left-2"></div>
         <div class="main__box--right-2">
-          <h3 class="main__topic main__topic-2">
+          <h3 class="main__topic main__topic-2 fst-italic">
             烘培
             <span>Roast</span>
           </h3>
           <p class="main__description main__description-2">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-            ratione nemo quod incidunt, facilis exercitationem minima eveniet
-            veritatis voluptates mollitia magnam accusantium qui esse
-            consequatur officia cumque itaque ducimus, necessitatibus culpa
-            veniam? Itaque debitis ut esse doloribus. Repellat, veniam est
-            voluptates numquam vero quis accusantium dolor ratione officia.
-            Voluptates, assumenda!
+            使用『 淺培、中培、深培
+            』三種烘培方式，帶出每種豆子最迷人的味道，<span
+              class="text-secondary"
+              >淺培</span
+            >
+            能保留豆子最原始的香氣，酸中帶點花果香，<span class="text-secondary"
+              >中培</span
+            >在酸苦平衡中有著堅果可可風味，在喉中順口回甘，而<span
+              class="text-secondary"
+              >深培</span
+            >擁有最濃厚的口感，焦苦中帶甜，呈現出多層次的風味
           </p>
         </div>
       </div>
       <div class="main__section main__section-3">
         <div class="main__box--left-3">
-          <h3 class="main__topic main__topic-3">
+          <h3 class="main__topic main__topic-3 fst-italic">
             研磨
             <span>Grind</span>
           </h3>
           <p class="main__description main__description-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-            ratione nemo quod incidunt, facilis exercitationem minima eveniet
-            veritatis voluptates mollitia magnam accusantium qui esse
-            consequatur officia cumque itaque ducimus, necessitatibus culpa
-            veniam? Itaque debitis ut esse doloribus. Repellat, veniam est
-            voluptates numquam vero quis accusantium dolor ratione officia.
-            Voluptates, assumenda!
+            <span class="text-secondary"
+              >『 好的磨豆機，比好的沖泡器具更重要 』</span
+            >咖啡粉粒的大小和研磨時間是決定一杯咖啡好壞的關鍵，
+            徑度一致的咖啡粉粒在高溫沖泡下能有最平均的口感，而在研磨時與空氣接觸的時間也會影響咖啡的純度，
+            兩者之間缺一不可
           </p>
         </div>
         <div class="main__box--right-3"></div>
@@ -90,18 +90,15 @@
       <div class="main__section main__section-4">
         <div class="main__box--left-4"></div>
         <div class="main__box--right-4">
-          <h3 class="main__topic main__topic-4">
+          <h3 class="main__topic main__topic-4 fst-italic">
             萃取
             <span>Extraction</span>
           </h3>
           <p class="main__description main__description-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia
-            ratione nemo quod incidunt, facilis exercitationem minima eveniet
-            veritatis voluptates mollitia magnam accusantium qui esse
-            consequatur officia cumque itaque ducimus, necessitatibus culpa
-            veniam? Itaque debitis ut esse doloribus. Repellat, veniam est
-            voluptates numquam vero quis accusantium dolor ratione officia.
-            Voluptates, assumenda!
+            義式咖啡機和手沖咖啡皆有特色，使用咖啡機加壓萃取的 Espresso
+            搭配牛奶，廣受大眾的喜愛，手沖咖啡的滴濾手法最能發揮豆子本身的風味，
+            <span class="text-secondary">水流速度</span
+            >控制著咖啡的酸甜濃淡，對於重視風味的人來說是種味覺大饗宴
           </p>
         </div>
       </div>
