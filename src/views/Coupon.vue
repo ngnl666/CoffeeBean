@@ -283,10 +283,6 @@ export default {
         })
         .catch(error => console.log(error.message));
     },
-    setAlertMsg(msg) {
-      this.setAlertMsg(msg);
-      this.setIsAlert();
-    },
     conertToDate(timestamp) {
       return new Date(timestamp * 1000).toLocaleDateString();
     },

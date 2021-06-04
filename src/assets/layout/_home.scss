@@ -177,6 +177,10 @@
     }
   }
 
+  &__text {
+    color: $color-primary;
+  }
+
   &__flex {
     display: flex;
     justify-content: center;

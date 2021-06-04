@@ -84,10 +84,6 @@ export default {
         })
         .catch(error => console.log(error.message));
     },
-    setAlertMsg(msg) {
-      this.setAlertMsg(msg);
-      this.setIsAlert();
-    },
   },
   computed: {
     ...mapState('moduleAdmin', ['isAlert']),

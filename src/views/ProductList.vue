@@ -391,10 +391,6 @@ export default {
         })
         .catch(error => console.log(error.message));
     },
-    setAlertMsg(msg) {
-      this.setAlertMsg(msg);
-      this.setIsAlert();
-    },
     setCurrency(num) {
       const n = Number(num);
       return `$${n.toFixed(0).replace(/./g, (c, i, a) => {

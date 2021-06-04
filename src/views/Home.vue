@@ -41,7 +41,7 @@
           </h3>
           <p class="main__description main__description-1">
             堅持進口咖啡原產地的豆子，嚴格把關每批生豆的含水率、顏色及密度，採用標準化
-            SCAA 杯測方式，將其<span class="text-secondary"
+            SCAA 杯測方式，將其<span class="main__text"
               >香氣、餘韻、酸值、乾淨度 . . .</span
             >
             等十大指標列為評測分級標準，為的就是能讓每一位客人品嘗到最完美的咖啡
@@ -58,14 +58,13 @@
           </h3>
           <p class="main__description main__description-2">
             使用『 淺培、中培、深培
-            』三種烘培方式，帶出每種豆子最迷人的味道，<span
-              class="text-secondary"
+            』三種烘培方式，帶出每種豆子最迷人的味道，<span class="main__text"
               >淺培</span
             >
-            能保留豆子最原始的香氣，酸中帶點花果香，<span class="text-secondary"
+            能保留豆子最原始的香氣，酸中帶點花果香，<span class="main__text"
               >中培</span
             >在酸苦平衡中有著堅果可可風味，在喉中順口回甘，而<span
-              class="text-secondary"
+              class="main__text"
               >深培</span
             >擁有最濃厚的口感，焦苦中帶甜，呈現出多層次的風味
           </p>
@@ -78,7 +77,7 @@
             <span>Grind</span>
           </h3>
           <p class="main__description main__description-3">
-            <span class="text-secondary"
+            <span class="main__text"
               >『 好的磨豆機，比好的沖泡器具更重要 』</span
             >咖啡粉粒的大小和研磨時間是決定一杯咖啡好壞的關鍵，
             徑度一致的咖啡粉粒在高溫沖泡下能有最平均的口感，而在研磨時與空氣接觸的時間也會影響咖啡的純度，
@@ -97,7 +96,7 @@
           <p class="main__description main__description-4">
             義式咖啡機和手沖咖啡皆有特色，使用咖啡機加壓萃取的 Espresso
             搭配牛奶，廣受大眾的喜愛，手沖咖啡的滴濾手法最能發揮豆子本身的風味，
-            <span class="text-secondary">水流速度</span
+            <span class="main__text">水流速度</span
             >控制著咖啡的酸甜濃淡，對於重視風味的人來說是種味覺大饗宴
           </p>
         </div>
