@@ -76,6 +76,7 @@ export default {
         .then(res => {
           if (!res.data.success) {
             vm.setAlertMsg('登入失敗');
+            vm.setIsAlert();
             return;
           }
           const { token, expired } = res.data;

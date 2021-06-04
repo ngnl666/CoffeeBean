@@ -335,6 +335,7 @@ export default {
         .then(res => {
           if (!res.data.success) {
             vm.setAlertMsg('上傳商品失敗');
+            vm.setIsAlert();
             this.productModal.hide();
             vm.getProducts();
             return;
@@ -357,6 +358,7 @@ export default {
         .then(res => {
           if (!res.data.success) {
             vm.setAlertMsg(res.data.message);
+            vm.setIsAlert();
             return;
           }
           this.delProductModal.hide();
@@ -378,9 +380,9 @@ export default {
           },
         })
         .then(res => {
-          console.log(res);
           if (!res.data.success) {
             vm.setAlertMsg(res.data.message);
+            vm.setIsAlert();
             vm.status.fileUploading = false;
             this.$refs.files.value = '';
             return;

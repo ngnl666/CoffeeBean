@@ -276,6 +276,7 @@ export default {
         .then(res => {
           if (!res.data.success) {
             vm.setAlertMsg(res.data.message);
+            vm.setIsAlert();
             return;
           }
           this.delCouponModal.hide();

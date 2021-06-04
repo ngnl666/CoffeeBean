@@ -80,6 +80,7 @@ export default {
         .then(res => {
           if (!res.data.success) {
             vm.setAlertMsg('登出失敗');
+            vm.setIsAlert();
             return;
           }
           this.$router.push('/login');
