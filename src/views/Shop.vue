@@ -3,16 +3,7 @@
   <Banner />
   <main class="shop">
     <nav class="shop__nav">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item">SHOP</li>
-        <li
-          v-for="item in breadcrumbList"
-          :key="item"
-          class="breadcrumb-item active"
-        >
-          {{ item }}
-        </li>
-      </ol>
+      <Breadcrumb />
 
       <div class="shop__myFav">
         <router-link to="/favorite" class="myBtn myBtn--blue"
@@ -23,130 +14,179 @@
 
     <div class="shop__main">
       <div class="shop__sidebar">
-        <ul class="shop__list" ref="shop__list">
-          <li
-            @click="activeList = '所有商品'"
-            :class="{ activeList: activeList === '所有商品' }"
-            class="shop__listItem"
-          >
-            所有商品
-          </li>
-          <li
-            @click="activeList = '咖啡豆'"
-            :class="{ activeList: activeList === '咖啡豆' }"
-            class="shop__listItem"
-          >
-            咖啡豆
-            <ul
-              class="shop__list--inner"
-              :class="{ active: activeList === '咖啡豆' }"
+        <div class="shop__sidebar--top">
+          <div class="shop__sidebar--top-L"></div>
+          <div class="shop__sidebar--top-R"></div>
+        </div>
+        <div class="shop__sidebar--body">
+          <ul class="shop__list" ref="shop__list">
+            <li
+              :class="{ activeList: activeList === 'all' }"
+              class="shop__listItem"
             >
-              <li
-                v-for="(item, key) in dataList.coffeebean"
-                :key="key"
-                @click="activeItem = item"
+              <router-link to="/shop/all" class="shop__link"
+                >所有商品</router-link
               >
-                <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
-                {{ item }}
-              </li>
-            </ul>
-          </li>
-          <li
-            @click="activeList = '咖啡設備'"
-            :class="{ activeList: activeList === '咖啡設備' }"
-            class="shop__listItem"
-          >
-            咖啡設備
-            <ul
-              class="shop__list--inner"
-              :class="{ active: activeList === '咖啡設備' }"
+            </li>
+            <li
+              :class="{ activeList: activeList === 'coffeebean' }"
+              class="shop__listItem"
             >
-              <li
-                v-for="item in dataList.equipment"
-                :key="item"
-                @click="activeItem = item"
+              <router-link to="/shop/coffeebean" class="shop__link"
+                >咖啡豆</router-link
               >
-                <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
-                {{ item }}
-              </li>
-            </ul>
-          </li>
-          <li
-            @click="activeList = '典藏商品'"
-            :class="{ activeList: activeList === '典藏商品' }"
-            class="shop__listItem"
-          >
-            典藏商品
-            <ul
-              class="shop__list--inner"
-              :class="{ active: activeList === '典藏商品' }"
+              <ul
+                class="shop__list--inner"
+                :class="{ active: activeList === 'coffeebean' }"
+              >
+                <li v-for="(item, key) in list.coffeebean" :key="key">
+                  <router-link
+                    :to="`/shop/coffeebean/${item.split('-')[1]}`"
+                    class="shop__link"
+                    ><i
+                      class="fas fa-mug-hot"
+                      v-if="activeItem === item.split('-')[1]"
+                    ></i
+                    >{{ item.split('-')[0] }}</router-link
+                  >
+                </li>
+              </ul>
+            </li>
+            <li
+              :class="{ activeList: activeList === 'equipment' }"
+              class="shop__listItem"
             >
-              <li
-                v-for="item in dataList.collection"
-                :key="item"
-                @click="activeItem = item"
+              <router-link to="/shop/equipment" class="shop__link"
+                >咖啡設備</router-link
               >
-                <i class="fas fa-mug-hot" v-if="activeItem === item"></i>
-                {{ item }}
-              </li>
-            </ul>
-          </li>
-        </ul>
+              <ul
+                class="shop__list--inner"
+                :class="{ active: activeList === 'equipment' }"
+              >
+                <li v-for="item in list.equipment" :key="item">
+                  <router-link
+                    :to="`/shop/equipment/${item.split('-')[1]}`"
+                    class="shop__link"
+                    ><i
+                      class="fas fa-mug-hot"
+                      v-if="activeItem === item.split('-')[1]"
+                    ></i
+                    >{{ item.split('-')[0] }}</router-link
+                  >
+                </li>
+              </ul>
+            </li>
+            <li
+              :class="{ activeList: activeList === 'classic' }"
+              class="shop__listItem"
+            >
+              <router-link to="/shop/classic" class="shop__link"
+                >典藏商品</router-link
+              >
+              <ul
+                class="shop__list--inner"
+                :class="{ active: activeList === 'classic' }"
+              >
+                <li v-for="item in list.classic" :key="item">
+                  <router-link
+                    :to="`/shop/classic/${item.split('-')[1]}`"
+                    class="shop__link"
+                    ><i
+                      class="fas fa-mug-hot"
+                      v-if="activeItem === item.split('-')[1]"
+                    ></i
+                    >{{ item.split('-')[0] }}</router-link
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
       </div>
 
       <div class="shop__products">
-        <Card />
-        <Card />
-        <Card />
-        <Card />
-        <Card />
+        <Card v-for="item in ProductsPerPage" :key="item.id" :product="item" />
       </div>
+    </div>
+    <div class="shop__pagination pagination-lg">
+      <Pagination />
     </div>
   </main>
   <Footer />
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapState, mapActions, mapMutations } from 'vuex';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
+import Breadcrumb from '../components/Breadcrumb.vue';
 import Card from '../components/Card.vue';
+import Pagination from '../components/Pagination.vue';
 import Footer from '../components/Footer.vue';
 
 export default {
   components: {
     Navbar,
     Banner,
+    Breadcrumb,
     Card,
+    Pagination,
     Footer,
   },
   data() {
     return {
-      dataList: {
-        coffeebean: ['淺培', '中培', '深培'],
-        equipment: ['手沖 / 磨豆', '半自動'],
-        collection: ['生活用品', '隨行杯'],
+      list: {
+        coffeebean: ['淺培-light', '中培-medium', '深培-high'],
+        equipment: ['手沖 / 磨豆-grinder', '半自動-automatic'],
+        classic: ['生活用品-life', '隨行杯-cup'],
       },
-      breadcrumbList: [],
-      activeList: '',
-      activeItem: '',
       bgActive: false,
     };
   },
   computed: {
-    breadcrumbPair() {
-      return [this.activeList, this.activeItem];
+    ...mapState('moduleFrontPage', ['products', 'pagination']),
+    activeList() {
+      return this.$route.params.list;
+    },
+    activeItem() {
+      return this.$route.params.item;
+    },
+    filterProducts() {
+      const vm = this;
+      return vm.products.filter(p => {
+        if (vm.activeList !== 'all' && !vm.activeItem) {
+          return vm.activeList === p.category.split('-')[0];
+        } else if (vm.activeItem) {
+          return vm.activeItem === p.category.split('-')[1];
+        } else {
+          return true;
+        }
+      });
+    },
+    ProductsPerPage() {
+      return this.filterProducts.slice(
+        6 * (this.pagination.current_page - 1),
+        6 * this.pagination.current_page
+      );
     },
   },
   watch: {
-    breadcrumbPair(val, oldVal) {
-      val[0] !== oldVal[0]
-        ? (this.breadcrumbList = [val[0]])
-        : (this.breadcrumbList = this.breadcrumbPair);
+    activeList() {
+      this.setPagination({
+        total_pages: Math.ceil(this.filterProducts.length / 6),
+        current_page: 1,
+      });
+    },
+    activeItem() {
+      this.setPagination({
+        total_pages: Math.ceil(this.filterProducts.length / 6),
+        current_page: 1,
+      });
     },
   },
   methods: {
-    ...mapMutations('moduleFrontPage', ['setBgActive']),
+    ...mapActions('moduleFrontPage', ['getProducts']),
+    ...mapMutations('moduleFrontPage', ['setBgActive', 'setPagination']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
       this.setBgActive(this.bgActive);
@@ -154,6 +194,7 @@ export default {
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);
+    this.getProducts();
   },
 };
 </script>

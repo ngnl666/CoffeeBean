@@ -39,6 +39,7 @@
       <Card />
       <Card />
       <Card />
+      <Card />
     </div>
   </div>
   <Footer />
@@ -59,6 +60,12 @@ export default {
   },
   data() {
     return {};
+  },
+  methods: {
+    handleScroll() {
+      this.bgActive = window.scrollY > 0 ? true : false;
+      this.setBgActive(this.bgActive);
+    },
   },
 };
 </script>

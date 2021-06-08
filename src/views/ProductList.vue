@@ -15,15 +15,14 @@
   >
     建立新產品
   </button>
-
-  <table class="table table-striped table-hover align-middle my-5">
+  <table class="col-10 table table-striped table-hover align-middle my-5">
     <thead>
       <tr>
-        <th width="150">分類</th>
+        <th width="200">分類</th>
         <th>產品名稱</th>
         <th width="150">原價</th>
         <th width="200">售價</th>
-        <th width="200">
+        <th width="150">
           是否啟用
           <input
             v-model="isEnabled"
@@ -63,7 +62,6 @@
       </tr>
     </tbody>
   </table>
-
   <div class="d-flex justify-content-center">
     <Pagination />
   </div>

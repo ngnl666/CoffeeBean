@@ -3,7 +3,7 @@
     <ul class="pagination">
       <li class="page-item" :class="{ disabled: !pagination.has_pre }">
         <a
-          @click.prevent="updatePage(pagination.current_page - 1)"
+          @click.prevent="updatePage(pagination.current_page - 1, '-')"
           class="page-link"
           href="#"
           aria-label="Previous"
@@ -17,13 +17,13 @@
         :class="{ active: pagination.current_page === page }"
         class="page-item"
       >
-        <a @click.prevent="updatePage(page)" class="page-link" href="#">{{
+        <a @click.prevent="updatePage(page, '=')" class="page-link" href="#">{{
           page
         }}</a>
       </li>
       <li class="page-item" :class="{ disabled: !pagination.has_next }">
         <a
-          @click.prevent="updatePage(pagination.current_page + 1)"
+          @click.prevent="updatePage(pagination.current_page + 1, '+')"
           class="page-link"
           href="#"
           aria-label="Next"
@@ -36,19 +36,39 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 export default {
   name: 'Pagination',
   computed: {
     pagination() {
-      return this.$store.state.moduleAdmin.pagination;
+      if (this.$route.name === 'ProductList' || this.$route.name === 'Coupon') {
+        return this.$store.state.pagination;
+      } else {
+        return this.$store.state.moduleFrontPage.pagination;
+      }
     },
   },
   methods: {
     ...mapActions('moduleAdmin', ['getProducts', 'getCoupons']),
-    updatePage(page) {
-      if (this.$route.name === 'ProductList') this.getProducts(page);
-      if (this.$route.name === 'Coupon') this.getCoupons(page);
+    ...mapMutations('moduleFrontPage', ['setPagination']),
+    updatePage(page, state) {
+      switch (this.$route.name) {
+        case 'ProductList':
+          this.getProducts(page);
+          break;
+        case 'Coupon':
+          this.getCoupons(page);
+          break;
+        case 'Shop':
+        case 'List':
+        case 'Item':
+          if (state === '-') this.pagination.current_page -= 1;
+          if (state === '=') this.pagination.current_page = page;
+          if (state === '+') this.pagination.current_page += 1;
+
+          this.setPagination(this.pagination);
+          break;
+      }
     },
   },
 };

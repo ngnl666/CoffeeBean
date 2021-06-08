@@ -14,23 +14,24 @@
     </div>
 
     <figure class="productCard__shape">
-      <img
-        src="../assets/image/product-1.jpeg"
-        class="productCard__img"
-        alt="coffeebean"
-      />
+      <img :src="product.imageUrl" class="productCard__img" alt="coffeebean" />
       <figcaption class="productCard__caption">
         <!-- 動態路由 4-2 -->
-        <router-link to="/detail" class="productCard__link"
+        <router-link :to="`/detail/${product.id}`" class="productCard__link"
           >商品詳情</router-link
         >
       </figcaption>
     </figure>
 
-    <p class="productCard__name">咖啡豆</p>
+    <p class="productCard__name">{{ product.title }}</p>
     <div class="productCard__description">
-      <div class="productCard__origin">$500</div>
-      <div class="productCard__price">$350</div>
+      <div
+        v-if="product.original_price && product.original_price > 0"
+        class="productCard__origin"
+      >
+        ${{ product.original_price }}
+      </div>
+      <div class="productCard__price">${{ product.price }}</div>
     </div>
 
     <div class="productCard__cart">
@@ -41,6 +42,7 @@
 
 <script>
 export default {
+  props: ['product'],
   data() {
     return {
       stared: false,
@@ -58,8 +60,8 @@ export default {
   height: 28rem;
   background-color: #fff;
   padding: 1rem;
-  //   margin-right: 3.5rem;
   margin-bottom: 2rem;
+  margin-right: 2rem;
   border-radius: 15px;
   box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
   position: relative;
@@ -166,13 +168,10 @@ export default {
     text-align: center;
   }
 
-  &__cart {
-    display: flex;
-    justify-content: flex-end;
-    padding: 0 0.5rem;
-  }
-
   &__icon {
+    position: absolute;
+    right: 1.2rem;
+    bottom: 1rem;
     font-size: $font-m;
     color: $color-blue;
   }

@@ -12,7 +12,7 @@
       </li>
       <li>
         <router-link
-          to="/shop"
+          to="/shop/all"
           class="navigation__link hvr-underline-from-center"
           >SHOP</router-link
         >

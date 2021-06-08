@@ -16,6 +16,8 @@ git init
 git add -A
 git commit -m 'deploy'
 
+git branch -m main
+
 # git push -f git@github.com:ngnl666/ngnl666.github.io.git main
 git push -f git@github.com:ngnl666/CoffeeBean.git main:gh-pages
 

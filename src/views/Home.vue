@@ -104,7 +104,7 @@
 
       <div class="main__flex">
         <router-link
-          to="/shop"
+          to="/shop/all"
           class="myBtn main__myBtn--primary hvr-icon-forward"
           >來去看看<i class="main__icon fa fa-chevron-circle-right hvr-icon"></i
         ></router-link>

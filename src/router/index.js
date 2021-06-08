@@ -10,6 +10,18 @@ const routes = [
     path: '/shop',
     name: 'Shop',
     component: () => import('../views/Shop.vue'),
+    children: [
+      {
+        path: ':list',
+        name: 'List',
+        component: () => import('../views/Shop.vue'),
+      },
+      {
+        path: ':list/:item',
+        name: 'Item',
+        component: () => import('../views/Shop.vue'),
+      },
+    ],
   },
   {
     path: '/detail', // 改成動態路由
@@ -60,11 +72,6 @@ const routes = [
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('../views/Home.vue'),
-  },
-  {
-    path: '/shop/:pathMatch(.*)*',
-    name: 'ProductNotFound',
-    component: () => import('../views/Shop.vue'),
   },
 ];
 

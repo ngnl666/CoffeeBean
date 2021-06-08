@@ -53,17 +53,14 @@
     <p class="productDetail__relateTitle">- 猜你喜歡 -</p>
 
     <div class="productDetail__products">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <Card v-for="item in randomProducts" :key="item.id" :product="item" />
     </div>
   </div>
   <Footer />
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import Navbar from '../components/Navbar.vue';
 import Footer from '../components/Footer.vue';
 import Card from '../components/Card.vue';
@@ -79,7 +76,20 @@ export default {
       productQuantity: 3,
     };
   },
+  computed: {
+    ...mapState('moduleFrontPage', ['products']),
+    randomProducts() {
+      const random = [];
+      for (let i = 0; i < 3; i++) {
+        // 不能包括當前商品
+        const rNum = Math.floor(Math.random() * this.products.length);
+        random.push(this.products[rNum]);
+      }
+      return random;
+    },
+  },
   methods: {
+    ...mapActions('moduleFrontPage', ['getProducts']),
     ...mapMutations('moduleFrontPage', ['setBgActive']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
@@ -88,6 +98,7 @@ export default {
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);
+    this.getProducts();
   },
 };
 </script>

@@ -18,7 +18,13 @@ router.beforeEach((to, from, next) => {
       .catch(error => console.log(error.message));
   } else {
     next();
-    window.scroll(0, 0);
+
+    if (
+      (to.name !== 'List' && to.name !== 'Item') ||
+      to.fullPath.split('/')[2] === 'all'
+    ) {
+      window.scroll(0, 0);
+    }
   }
 });
 
