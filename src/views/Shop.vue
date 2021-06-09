@@ -3,13 +3,9 @@
   <Banner />
   <main class="shop">
     <nav class="shop__nav">
-      <Breadcrumb />
-
-      <div class="shop__myFav">
-        <router-link to="/favorite" class="myBtn myBtn--blue"
-          >我的收藏</router-link
-        >
-      </div>
+      <router-link to="/favorite" class="myBtn myBtn--blue"
+        >我的收藏</router-link
+      >
     </nav>
 
     <div class="shop__main">
@@ -119,7 +115,6 @@
 import { mapState, mapActions, mapMutations } from 'vuex';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
-import Breadcrumb from '../components/Breadcrumb.vue';
 import Card from '../components/Card.vue';
 import Pagination from '../components/Pagination.vue';
 import Footer from '../components/Footer.vue';
@@ -128,7 +123,6 @@ export default {
   components: {
     Navbar,
     Banner,
-    Breadcrumb,
     Card,
     Pagination,
     Footer,

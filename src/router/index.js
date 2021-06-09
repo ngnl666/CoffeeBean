@@ -24,7 +24,7 @@ const routes = [
     ],
   },
   {
-    path: '/detail', // 改成動態路由
+    path: '/detail/:productId',
     name: 'DetailCard',
     component: () => import('../components/DetailCard.vue'),
   },

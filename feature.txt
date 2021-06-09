@@ -10,3 +10,5 @@
 5) intersection observer
 
 6) 破圖假圖
+
+7) breadcrumb 無法共用（因為是抓網址的 params 來決定）

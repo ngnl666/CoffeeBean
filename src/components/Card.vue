@@ -16,7 +16,6 @@
     <figure class="productCard__shape">
       <img :src="product.imageUrl" class="productCard__img" alt="coffeebean" />
       <figcaption class="productCard__caption">
-        <!-- 動態路由 4-2 -->
         <router-link :to="`/detail/${product.id}`" class="productCard__link"
           >商品詳情</router-link
         >

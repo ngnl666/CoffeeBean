@@ -3,9 +3,20 @@
   <div class="productDetail">
     <nav class="productDetail__nav">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item">SHOP</li>
-        <li class="breadcrumb-item active">咖啡豆</li>
-        <li class="breadcrumb-item active">淺培</li>
+        <router-link to="/shop/all" class="breadcrumb-item">SHOP</router-link>
+        <li
+          v-for="(item, key) in currentProduct.category.split('-')"
+          :key="item"
+          class="breadcrumb-item"
+        >
+          <router-link
+            :to="`/shop/${item}`"
+            v-if="key === 0"
+            class="productDetail__link breadcrumb__link"
+            >{{ item }}</router-link
+          >
+          <span v-else>{{ item }}</span>
+        </li>
       </ol>
     </nav>
 
@@ -13,36 +24,47 @@
       <div class="productDetail__card--left">
         <img
           class="productDetail__img"
-          src="../assets/image/product-1.jpeg"
+          :src="currentProduct.imageUrl"
           alt="coffeebean"
         />
         <div class="productDetail__group">
-          <button class="myBtn myBtn--count">
+          <button
+            @click="productQuantity--"
+            :disabled="productQuantity === 1"
+            class="myBtn myBtn--count"
+          >
             <i class="fas fa-chevron-left"></i>
           </button>
           <input
             v-model="productQuantity"
             class="myInput productDetail__input"
-            type="text"
+            type="number"
+            disabled
           />
-          <button class="myBtn myBtn--count myBtn--count-r">
+          <button
+            @click="productQuantity++"
+            :disabled="productQuantity === 10"
+            class="myBtn myBtn--count myBtn--count-r"
+          >
             <i class="fas fa-chevron-right"></i>
           </button>
         </div>
       </div>
       <div class="productDetail__card--right">
-        <h3 class="productDetail__name">阿拉比卡咖啡豆</h3>
+        <h3 class="productDetail__name">{{ currentProduct.title }}</h3>
         <p class="productDetail__detail">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae
-          ipsam cumque ullam quis doloremque magnam corporis voluptates minima.
-          Neque vitae optio non nemo iusto tenetur soluta, earum eaque dolore
-          aperiam modi. Inventore eius, quam libero fugit, quidem, ullam sunt
-          dignissimos blanditiis atque consequuntur pariatur corrupti dolorem
-          tempora excepturi quo saepe.
+          {{ currentProduct.description }}
         </p>
         <div class="productDetail__description">
-          <div class="productDetail__origin">$500</div>
-          <div class="productDetail__price">$350</div>
+          <div
+            v-if="
+              currentProduct.original_price && currentProduct.original_price > 0
+            "
+            class="productDetail__origin"
+          >
+            $ {{ currentProduct.original_price }}
+          </div>
+          <div class="productDetail__price">$ {{ currentProduct.price }}</div>
         </div>
         <button class="myBtn productDetail__cart">
           <i class="productDetail__icon fas fa-shopping-cart">加到購物車</i>
@@ -73,19 +95,20 @@ export default {
   },
   data() {
     return {
-      productQuantity: 3,
+      productQuantity: 1,
+      breadcrumbList: [],
+      randomProducts: [],
     };
   },
   computed: {
     ...mapState('moduleFrontPage', ['products']),
-    randomProducts() {
-      const random = [];
-      for (let i = 0; i < 3; i++) {
-        // 不能包括當前商品
-        const rNum = Math.floor(Math.random() * this.products.length);
-        random.push(this.products[rNum]);
-      }
-      return random;
+    currentProduct() {
+      return this.products.find(p => p.id === this.$route.params.productId);
+    },
+  },
+  watch: {
+    currentProduct(val) {
+      if (val) this.createRandomProducts();
     },
   },
   methods: {
@@ -95,10 +118,24 @@ export default {
       this.bgActive = window.scrollY > 0 ? true : false;
       this.setBgActive(this.bgActive);
     },
+    createRandomProducts() {
+      // 會產生重複的資料
+      let rNum;
+      this.randomProducts = [];
+      this.productQuantity = 1;
+
+      while (this.randomProducts.length < 3) {
+        rNum = Math.floor(Math.random() * this.products.length);
+        if (this.products[rNum].id !== this.currentProduct.id) {
+          this.randomProducts.push(this.products[rNum]);
+        }
+      }
+    },
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);
     this.getProducts();
+    this.createRandomProducts();
   },
 };
 </script>
@@ -115,6 +152,10 @@ export default {
   &__nav {
     padding-top: 1rem;
     margin-left: 1rem;
+  }
+
+  &__link {
+    display: inline !important;
   }
 
   &__card {
@@ -158,7 +199,12 @@ export default {
     font-size: $font-l;
     font-weight: bold;
     letter-spacing: 5px;
-    margin-bottom: 2rem;
+    padding-top: 1.5rem;
+    margin-bottom: 5rem;
+  }
+
+  &__detail {
+    margin-bottom: 3rem;
   }
 
   &__description {
@@ -212,6 +258,10 @@ export default {
     border-radius: 0px;
     background-color: $color-blue;
     color: $color-white;
+
+    &:disabled {
+      background-color: $color-grey;
+    }
 
     &-r {
       border-radius: 0 0 10px 0;
