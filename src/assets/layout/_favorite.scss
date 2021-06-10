@@ -1,9 +1,13 @@
 .favorite {
   background-color: $color-secondary;
-  padding: 2rem 3rem;
+  padding: 2rem 4rem;
+
+  &__btn {
+    margin-bottom: 2rem;
+  }
 
   &__item {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
   }
 }

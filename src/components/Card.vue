@@ -2,13 +2,13 @@
   <div class="productCard">
     <div class="productCard__fav">
       <i
-        v-if="!stared"
-        @click="stared = !stared"
+        v-if="!product.stared"
+        @click="isStared(true)"
         class="far fa-star productCard__fav--star"
       ></i>
       <i
-        v-if="stared"
-        @click="stared = !stared"
+        v-else
+        @click="isStared(false)"
         class="fas fa-star productCard__fav--stared"
       ></i>
     </div>
@@ -40,12 +40,23 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   props: ['product'],
   data() {
-    return {
-      stared: false,
-    };
+    return {};
+  },
+  methods: {
+    ...mapMutations('moduleFrontPage', [
+      'setStaredProducts',
+      'removeStaredProducts',
+    ]),
+    isStared(state) {
+      state
+        ? this.setStaredProducts(this.product)
+        : this.removeStaredProducts(this.product);
+    },
   },
 };
 </script>

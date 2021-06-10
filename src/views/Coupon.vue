@@ -223,7 +223,8 @@ export default {
     },
   },
   computed: {
-    ...mapState('moduleAdmin', ['coupons', 'isAlert', 'isLoading']),
+    ...mapState('moduleAdmin', ['coupons', 'isLoading']),
+    ...mapState('isAlert'),
     enabledCoupons() {
       return this.isEnabled
         ? this.coupons.filter(p => p.is_enabled)
@@ -232,7 +233,7 @@ export default {
   },
   methods: {
     ...mapActions('moduleAdmin', ['getCoupons']),
-    ...mapMutations('moduleAdmin', ['setAlertMsg', 'setIsAlert']),
+    ...mapMutations(['setAlertMsg', 'setIsAlert']),
     openCouponModal(isNew, item) {
       if (isNew) {
         this.tempCoupon = {};

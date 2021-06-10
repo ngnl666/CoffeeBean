@@ -66,7 +66,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations('moduleAdmin', ['setAlertMsg', 'setIsAlert']),
+    ...mapMutations(['setIsAlert', 'setAlertMsg']),
     signin() {
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
       var vm = this;
@@ -87,7 +87,7 @@ export default {
     },
   },
   computed: {
-    ...mapState('moduleAdmin', ['isAlert']),
+    ...mapState(['isAlert']),
   },
 };
 </script>

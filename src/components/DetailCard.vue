@@ -119,23 +119,29 @@ export default {
       this.setBgActive(this.bgActive);
     },
     createRandomProducts() {
-      // 會產生重複的資料
-      let rNum;
+      let rNum,
+        rArray = [];
       this.randomProducts = [];
       this.productQuantity = 1;
 
       while (this.randomProducts.length < 3) {
         rNum = Math.floor(Math.random() * this.products.length);
-        if (this.products[rNum].id !== this.currentProduct.id) {
+        if (
+          this.products[rNum].id !== this.currentProduct.id &&
+          !rArray.includes(rNum)
+        ) {
           this.randomProducts.push(this.products[rNum]);
+          rArray.push(rNum);
         }
       }
     },
   },
+  mounted() {
+    this.createRandomProducts();
+  },
   created() {
     window.addEventListener('scroll', this.handleScroll);
     this.getProducts();
-    this.createRandomProducts();
   },
 };
 </script>

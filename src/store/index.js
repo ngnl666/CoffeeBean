@@ -8,8 +8,6 @@ const moduleAdmin = {
     coupons: [],
     orders: [],
     isLoading: false,
-    alertMsg: '',
-    isAlert: false,
   }),
   mutations: {
     setProducts(state, payload) {
@@ -23,15 +21,6 @@ const moduleAdmin = {
     },
     setIsLoading(state, payload) {
       state.isLoading = payload;
-    },
-    setAlertMsg(state, payload) {
-      state.alertMsg = payload;
-      state.isAlert = true;
-    },
-    setIsAlert(state) {
-      setTimeout(() => {
-        state.isAlert = false;
-      }, 3000);
     },
   },
   actions: {
@@ -97,6 +86,8 @@ const moduleFrontPage = {
   state: () => ({
     bgActive: false,
     products: [],
+    staredProducts: [],
+    cart: [],
     pagination: {},
   }),
   mutations: {
@@ -104,7 +95,28 @@ const moduleFrontPage = {
       state.bgActive = payload;
     },
     setProducts(state, payload) {
+      state.staredProducts = JSON.parse(localStorage.getItem('staredId')) || [];
+
+      for (const p of payload) {
+        state.staredProducts.includes(p.id)
+          ? (p.stared = true)
+          : (p.stared = false);
+      }
       state.products = payload;
+    },
+    setStaredProducts(state, payload) {
+      payload.stared = true;
+      state.staredProducts.push(payload.id);
+      localStorage.setItem('staredId', JSON.stringify(state.staredProducts));
+    },
+    removeStaredProducts(state, payload) {
+      const pid = state.staredProducts.indexOf(payload.id);
+      payload.stared = false;
+      state.staredProducts.splice(pid, 1);
+      localStorage.setItem('staredId', JSON.stringify(state.staredProducts));
+    },
+    setCart(state, payload) {
+      state.cart.push(payload);
     },
     setPagination(state, payload) {
       state.pagination = {
@@ -137,17 +149,44 @@ const moduleFrontPage = {
           console.log(error.message);
         });
     },
+    addCart({ commit }, cartItem) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+
+      axios
+        .post(api, { data: { cartItem } })
+        .then(res => {
+          if (!res.data.success) {
+            commit('setAlertMsg', '加入購物車失敗');
+            return;
+          }
+          commit('setCart', cartItem);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
   },
 };
 
 export default createStore({
   state: {
     pagination: {},
+    alertMsg: '',
+    isAlert: false,
   },
   getters: {},
   mutations: {
     setPagination(state, payload) {
       state.pagination = payload;
+    },
+    setAlertMsg(state, payload) {
+      state.alertMsg = payload;
+      state.isAlert = true;
+    },
+    setIsAlert(state) {
+      setTimeout(() => {
+        state.isAlert = false;
+      }, 3000);
     },
   },
   actions: {},

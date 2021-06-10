@@ -70,7 +70,7 @@ export default {
   },
   name: 'Dashboard',
   methods: {
-    ...mapMutations('moduleAdmin', ['setAlertMsg', 'setIsAlert']),
+    ...mapMutations(['setAlertMsg', 'setIsAlert']),
     signout() {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
@@ -89,7 +89,7 @@ export default {
     },
   },
   computed: {
-    ...mapState('moduleAdmin', ['isAlert']),
+    ...mapState(['isAlert']),
   },
   created() {
     const token = document.cookie.replace(

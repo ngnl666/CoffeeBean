@@ -2,16 +2,14 @@
   <Navbar />
   <Banner />
   <div class="favorite">
-    <p>
-      <button
-        class="btn btn-primary"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#collapseExample"
-      >
-        我的優惠券
-      </button>
-    </p>
+    <button
+      class="btn btn-primary favorite__btn"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#collapseExample"
+    >
+      我的優惠券
+    </button>
     <div class="row justify-content-center">
       <div class="collapse col-6 mb-4" id="collapseExample">
         <div class="list-group">
@@ -35,17 +33,14 @@
     </div>
 
     <div class="favorite__item">
-      <Card />
-      <Card />
-      <Card />
-      <Card />
-      <Card />
+      <Card v-for="item in favoriteProducts" :key="item.id" :product="item" />
     </div>
   </div>
   <Footer />
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
 import Card from '../components/Card.vue';
@@ -61,11 +56,21 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    ...mapState('moduleFrontPage', ['staredProducts', 'products']),
+    favoriteProducts() {
+      return this.products.filter(p => this.staredProducts.includes(p.id));
+    },
+  },
   methods: {
+    ...mapActions('moduleFrontPage', ['getProducts']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
       this.setBgActive(this.bgActive);
     },
+  },
+  created() {
+    this.getProducts();
   },
 };
 </script>
