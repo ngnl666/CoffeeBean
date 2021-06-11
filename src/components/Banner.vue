@@ -35,10 +35,10 @@
             alt="coffeeBean"
           />
           <div class="carousel-caption">
-            <h5>First slide label</h5>
+            <h5>國際咖啡日</h5>
             <p>
-              Some representative placeholder <span>ABC123</span> for the first
-              slide.
+              現在輸入 <span>COFFEE50</span> 即享有
+              <span class="text-danger">50%off</span> 優惠
             </p>
           </div>
         </div>
@@ -49,11 +49,8 @@
             alt="coffeeBean"
           />
           <div class="carousel-caption">
-            <h5>Second slide label</h5>
-            <p>
-              Some representative placeholder <span>ABC123</span> for the first
-              slide.
-            </p>
+            <h5>滿額贈活動</h5>
+            <p>全館只要消費滿 <span>$5000</span> 即可成為 VIP</p>
           </div>
         </div>
         <div class="carousel-item">
@@ -62,11 +59,13 @@
             class="d-block w-100"
             alt="coffeeBean"
           />
-          <div class="carousel-caption">
-            <h5>Third slide label</h5>
+          <div class="carousel-caption carousel-caption-3">
+            <h5>情人節小物</h5>
             <p>
-              Some representative placeholder <span>ABC123</span> for the first
-              slide.
+              傳說中 . . . 在白色情人節期間，送心儀對象<span
+                class="carousel-caption-text"
+                >對杯</span
+              >就能告白成功喔
             </p>
           </div>
         </div>
@@ -112,9 +111,14 @@ export default {};
     @include absCenter;
     background-color: rgba($color-black, 0.5);
 
+    &-3 {
+      padding: 1rem !important;
+    }
+
     h5 {
       font-size: $font-xl;
       margin-bottom: 3rem;
+      letter-spacing: 5px;
     }
 
     p {
@@ -125,6 +129,10 @@ export default {};
       color: $color-green;
       font-weight: bold;
       padding: 0 3px;
+    }
+
+    &-text {
+      color: $color-primary !important;
     }
   }
 }

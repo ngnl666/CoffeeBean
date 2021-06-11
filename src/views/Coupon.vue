@@ -224,7 +224,7 @@ export default {
   },
   computed: {
     ...mapState('moduleAdmin', ['coupons', 'isLoading']),
-    ...mapState('isAlert'),
+    ...mapState(['isAlert']),
     enabledCoupons() {
       return this.isEnabled
         ? this.coupons.filter(p => p.is_enabled)

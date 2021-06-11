@@ -25,7 +25,9 @@
     <p class="productCard__name">{{ product.title }}</p>
     <div class="productCard__description">
       <div
-        v-if="product.original_price && product.original_price > 0"
+        :class="{
+          hidden: !product.original_price || !product.original_price > 0,
+        }"
         class="productCard__origin"
       >
         ${{ product.original_price }}
@@ -34,13 +36,16 @@
     </div>
 
     <div class="productCard__cart">
-      <i class="fas fa-shopping-cart productCard__icon hvr-bounce-in"></i>
+      <i
+        @click="addCart({ product_id: product.id, qty: 1 })"
+        class="fas fa-shopping-cart productCard__icon hvr-bounce-in"
+      ></i>
     </div>
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 
 export default {
   props: ['product'],
@@ -52,6 +57,7 @@ export default {
       'setStaredProducts',
       'removeStaredProducts',
     ]),
+    ...mapActions('moduleFrontPage', ['addCart']),
     isStared(state) {
       state
         ? this.setStaredProducts(this.product)

@@ -12,22 +12,16 @@
     </button>
     <div class="row justify-content-center">
       <div class="collapse col-6 mb-4" id="collapseExample">
-        <div class="list-group">
+        <div class="list-group" v-for="coupon in myCoupons" :key="coupon.code">
           <a
             href="#"
             class="fs-5 text-danger list-group-item list-group-item-action"
-            ><span class="fs-5 fw-bold text-success ml-3">ABC123</span>
-            (50% off)
+            ><span class="fs-5 fw-bold text-success ml-3">{{
+              coupon.code
+            }}</span>
+            ({{ coupon.name }})
+            <span class="favorite__date">{{ coupon.date }}</span>
           </a>
-          <a href="#" class="list-group-item list-group-item-action"
-            >A second link item</a
-          >
-          <a href="#" class="list-group-item list-group-item-action"
-            >A third link item</a
-          >
-          <a href="#" class="list-group-item list-group-item-action"
-            >A fourth link item</a
-          >
         </div>
       </div>
     </div>
@@ -54,12 +48,20 @@ export default {
     Footer,
   },
   data() {
-    return {};
+    return {
+      coupons: '',
+    };
   },
   computed: {
     ...mapState('moduleFrontPage', ['staredProducts', 'products']),
     favoriteProducts() {
       return this.products.filter(p => this.staredProducts.includes(p.id));
+    },
+    myCoupons() {
+      const set = new Set();
+      return this.coupons.filter(c =>
+        !set.has(c.name) ? set.add(c.name) : false
+      );
     },
   },
   methods: {
@@ -71,6 +73,7 @@ export default {
   },
   created() {
     this.getProducts();
+    this.coupons = JSON.parse(localStorage.getItem('myCoupons')) || [];
   },
 };
 </script>

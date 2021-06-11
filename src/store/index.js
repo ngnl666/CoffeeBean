@@ -32,8 +32,8 @@ const moduleAdmin = {
         .get(api)
         .then(res => {
           if (!res.data.success) {
-            commit('setAlertMsg', '取得商品列表失敗');
-            commit('setIsAlert');
+            commit('setAlertMsg', '取得商品列表失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
             return;
           }
           commit('setIsLoading', false);
@@ -50,8 +50,8 @@ const moduleAdmin = {
         .get(api)
         .then(res => {
           if (!res.data.success) {
-            commit('setAlertMsg', '取得優惠券列表失敗');
-            commit('setIsAlert');
+            commit('setAlertMsg', '取得優惠券列表失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
             return;
           }
           commit('setIsLoading', false);
@@ -68,8 +68,8 @@ const moduleAdmin = {
         .get(api)
         .then(res => {
           if (!res.data.success) {
-            commit('setAlertMsg', '取得訂單列表失敗');
-            commit('setIsAlert');
+            commit('setAlertMsg', '取得訂單列表失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
             return;
           }
           commit('setIsLoading', false);
@@ -87,7 +87,8 @@ const moduleFrontPage = {
     bgActive: false,
     products: [],
     staredProducts: [],
-    cart: [],
+    myCoupons: [],
+    carts: '',
     pagination: {},
   }),
   mutations: {
@@ -115,8 +116,12 @@ const moduleFrontPage = {
       state.staredProducts.splice(pid, 1);
       localStorage.setItem('staredId', JSON.stringify(state.staredProducts));
     },
+    setMyCoupons(state, payload) {
+      state.myCoupons = JSON.parse(localStorage.getItem('myCoupons')) || [];
+      state.myCoupons.push(payload);
+    },
     setCart(state, payload) {
-      state.cart.push(payload);
+      state.carts = payload;
     },
     setPagination(state, payload) {
       state.pagination = {
@@ -136,7 +141,8 @@ const moduleFrontPage = {
         .get(api)
         .then(res => {
           if (!res.data.success) {
-            commit('setAlertMsg', '取得商品失敗');
+            commit('setAlertMsg', '取得商品失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
             return;
           }
           commit('setProducts', res.data.products);
@@ -149,17 +155,35 @@ const moduleFrontPage = {
           console.log(error.message);
         });
     },
+    getCart({ commit }) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      axios
+        .get(api)
+        .then(res => {
+          if (!res.data.success) {
+            commit('setAlertMsg', '取得購物車列表失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
+            return;
+          }
+          commit('setCart', res.data.data.carts);
+        })
+        .catch(error => {
+          console.log(error.message);
+        });
+    },
     addCart({ commit }, cartItem) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
 
       axios
-        .post(api, { data: { cartItem } })
+        .post(api, { data: cartItem })
         .then(res => {
           if (!res.data.success) {
-            commit('setAlertMsg', '加入購物車失敗');
+            commit('setAlertMsg', '加入購物車失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
             return;
           }
-          commit('setCart', cartItem);
+          commit('setAlertMsg', '加入購物車成功!', { root: true });
+          commit('setIsAlert', null, { root: true });
         })
         .catch(error => {
           console.log(error.message);

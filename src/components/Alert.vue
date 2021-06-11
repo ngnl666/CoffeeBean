@@ -1,6 +1,6 @@
 <template>
   <transition>
-    <div class="alert alert-warning alert" role="alert">
+    <div class="alert alert-success alert" role="alert">
       <strong>{{ alertMsg }}</strong>
     </div>
   </transition>
@@ -21,7 +21,7 @@ export default {
 .alert {
   padding: 8px 15px;
   z-index: 100000;
-  position: absolute;
+  position: fixed;
   animation: enter 0.5s ease-in;
   bottom: 7%;
   right: 2%;

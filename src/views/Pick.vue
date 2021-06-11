@@ -47,7 +47,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title">
-              恭喜獲得 <span class="text-danger">50% off</span> 優惠卷
+              恭喜獲得 <span class="text-danger">{{ coupon.name }}</span> 優惠卷
             </h5>
             <button
               type="button"
@@ -58,7 +58,9 @@
           </div>
           <div class="modal-body">
             <p class="fs-4">優惠碼:</p>
-            <p class="fs-3 fw-bold text-center text-success">ABC123</p>
+            <p class="fs-3 fw-bold text-center text-success">
+              {{ coupon.code }}
+            </p>
           </div>
         </div>
       </div>
@@ -69,6 +71,8 @@
 
 <script>
 import { Modal } from 'bootstrap';
+import { mapMutations, mapState } from 'vuex';
+import { couponList } from '../couponList.js';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
 import Footer from '../components/Footer.vue';
@@ -83,12 +87,28 @@ export default {
     return {
       pickCard: '',
       pickCardModal: null,
+      pickCount: 0,
+      coupon: '',
     };
   },
+  computed: {
+    ...mapState('moduleFrontPage', ['myCoupons']),
+  },
   methods: {
+    ...mapMutations('moduleFrontPage', ['setMyCoupons']),
     handleModal(pickCard) {
       this.pickCard = pickCard;
       setTimeout(() => this.pickCardModal.show(), 1500);
+      this.randomPick();
+    },
+    randomPick() {
+      this.pickCount++;
+
+      if (this.pickCount > 1) return;
+      const rNum = Math.floor(Math.random() * couponList.length);
+      this.coupon = couponList[rNum];
+      this.setMyCoupons(this.coupon);
+      localStorage.setItem('myCoupons', JSON.stringify(this.myCoupons));
     },
   },
   mounted() {

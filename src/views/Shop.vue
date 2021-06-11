@@ -1,4 +1,5 @@
 <template>
+  <Alert v-if="isAlert" />
   <Navbar />
   <Banner />
   <main class="shop">
@@ -113,6 +114,7 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
+import Alert from '../components/Alert.vue';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
 import Card from '../components/Card.vue';
@@ -121,6 +123,7 @@ import Footer from '../components/Footer.vue';
 
 export default {
   components: {
+    Alert,
     Navbar,
     Banner,
     Card,
@@ -139,6 +142,7 @@ export default {
   },
   computed: {
     ...mapState('moduleFrontPage', ['products', 'pagination']),
+    ...mapState(['isAlert']),
     activeList() {
       return this.$route.params.list;
     },

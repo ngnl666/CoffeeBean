@@ -34,6 +34,11 @@ const routes = [
     component: () => import('../views/Favorite.vue'),
   },
   {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('../views/Cart.vue'),
+  },
+  {
     path: '/pick',
     name: 'Pick',
     component: () => import('../views/Pick.vue'),

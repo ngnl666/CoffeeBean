@@ -1,4 +1,5 @@
 <template>
+  <Alert v-if="isAlert" />
   <Navbar />
   <div class="productDetail">
     <nav class="productDetail__nav">
@@ -66,7 +67,12 @@
           </div>
           <div class="productDetail__price">$ {{ currentProduct.price }}</div>
         </div>
-        <button class="myBtn productDetail__cart">
+        <button
+          @click="
+            addCart({ product_id: currentProduct.id, qty: productQuantity })
+          "
+          class="myBtn productDetail__cart"
+        >
           <i class="productDetail__icon fas fa-shopping-cart">加到購物車</i>
         </button>
       </div>
@@ -83,12 +89,14 @@
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
+import Alert from '../components/Alert.vue';
 import Navbar from '../components/Navbar.vue';
 import Footer from '../components/Footer.vue';
 import Card from '../components/Card.vue';
 
 export default {
   components: {
+    Alert,
     Navbar,
     Footer,
     Card,
@@ -102,6 +110,7 @@ export default {
   },
   computed: {
     ...mapState('moduleFrontPage', ['products']),
+    ...mapState(['isAlert']),
     currentProduct() {
       return this.products.find(p => p.id === this.$route.params.productId);
     },
@@ -112,7 +121,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('moduleFrontPage', ['getProducts']),
+    ...mapActions('moduleFrontPage', ['getProducts', 'addCart']),
     ...mapMutations('moduleFrontPage', ['setBgActive']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
