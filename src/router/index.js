@@ -24,6 +24,28 @@ const routes = [
     ],
   },
   {
+    path: '/cart',
+    name: 'Cart',
+    component: () => import('../views/Cart.vue'),
+    children: [
+      {
+        path: 'customer_cart',
+        name: 'CustomerCart',
+        component: () => import('../views/CustomerCart.vue'),
+      },
+      {
+        path: 'customer_imformation',
+        name: 'CustomerImformation',
+        component: () => import('../views/CustomerImformation.vue'),
+      },
+      {
+        path: 'customer_order',
+        name: 'CustomerOrder',
+        component: () => import('../views/CustomerOrder.vue'),
+      },
+    ],
+  },
+  {
     path: '/detail/:productId',
     name: 'DetailCard',
     component: () => import('../components/DetailCard.vue'),
@@ -32,11 +54,6 @@ const routes = [
     path: '/favorite',
     name: 'Favorite',
     component: () => import('../views/Favorite.vue'),
-  },
-  {
-    path: '/cart',
-    name: 'Cart',
-    component: () => import('../views/Cart.vue'),
   },
   {
     path: '/pick',

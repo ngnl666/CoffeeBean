@@ -38,7 +38,7 @@
             <h5>國際咖啡日</h5>
             <p>
               現在輸入 <span>COFFEE50</span> 即享有
-              <span class="text-danger">50%off</span> 優惠
+              <span class="px-2 text-white">50%off</span> 優惠
             </p>
           </div>
         </div>
@@ -132,7 +132,7 @@ export default {};
     }
 
     &-text {
-      color: $color-primary !important;
+      color: $color-secondary !important;
     }
   }
 }

@@ -1,0 +1,39 @@
+.cart {
+  background-color: $color-secondary;
+  padding: 1.5rem 3rem;
+  position: relative;
+
+  &__prograss {
+    margin-bottom: 3rem;
+
+    &-bar {
+      font-size: $font-m;
+      font-weight: bold;
+      letter-spacing: 1rem;
+    }
+  }
+
+  &__container {
+    width: 80%;
+    padding: 1rem 3rem;
+    margin: 7rem auto 0 auto;
+  }
+
+  &__customerCart {
+    padding: 1rem 2rem;
+    border: 2px solid $color-primary;
+    border-radius: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  &__btn {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 1rem;
+  }
+
+  &__myBtn {
+    background-color: $color-blue;
+    color: $color-white;
+  }
+}

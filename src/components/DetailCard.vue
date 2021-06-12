@@ -69,11 +69,15 @@
         </div>
         <button
           @click="
-            addCart({ product_id: currentProduct.id, qty: productQuantity })
+            addToCart({ product_id: currentProduct.id, qty: productQuantity })
           "
           class="myBtn productDetail__cart"
         >
-          <i class="productDetail__icon fas fa-shopping-cart">加到購物車</i>
+          <i
+            :class="{ cartGoRight: isAnimation }"
+            class="productDetail__icon fas fa-shopping-cart"
+            >加到購物車</i
+          >
         </button>
       </div>
     </div>
@@ -106,6 +110,7 @@ export default {
       productQuantity: 1,
       breadcrumbList: [],
       randomProducts: [],
+      isAnimation: false,
     };
   },
   computed: {
@@ -123,6 +128,14 @@ export default {
   methods: {
     ...mapActions('moduleFrontPage', ['getProducts', 'addCart']),
     ...mapMutations('moduleFrontPage', ['setBgActive']),
+    addToCart(cartItem) {
+      const vm = this;
+      this.addCart(cartItem);
+      this.isAnimation = true;
+      setTimeout(() => {
+        vm.isAnimation = false;
+      }, 1000);
+    },
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
       this.setBgActive(this.bgActive);
@@ -244,10 +257,6 @@ export default {
     color: $color-white;
     margin: 0 auto;
     overflow: hidden;
-
-    &:hover .productDetail__icon {
-      animation: cartGoRight 1s;
-    }
   }
 
   &__icon {
@@ -284,9 +293,13 @@ export default {
   }
 }
 
+.cartGoRight {
+  animation: cartGoRight 1s;
+}
+
 @keyframes cartGoRight {
   100% {
-    transform: translateX(95%);
+    transform: translateX(99%);
   }
 }
 </style>

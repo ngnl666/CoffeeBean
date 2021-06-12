@@ -189,6 +189,22 @@ const moduleFrontPage = {
           console.log(error.message);
         });
     },
+    deleteCartItem({ commit }, itemId) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart/${itemId}`;
+
+      axios
+        .delete(api)
+        .then(res => {
+          if (!res.data.success) {
+            commit('setAlertMsg', '刪除商品失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
+            return;
+          }
+          commit('setAlertMsg', '刪除成功!', { root: true });
+          commit('setIsAlert', null, { root: true });
+        })
+        .catch(error => console.log(error.message));
+    },
   },
 };
 
