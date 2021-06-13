@@ -1,6 +1,6 @@
 <template>
   <Alert v-if="isAlert" />
-  <table class="table table-striped table-hover">
+  <table class="table table-striped table-hover" v-if="myCart.length">
     <thead>
       <tr class="fs-5">
         <th width="300px" scope="col">商品</th>
@@ -15,7 +15,7 @@
         <td>{{ item.qty }}{{ item.product.unit }}</td>
         <td>${{ item.total }}</td>
         <td>
-          <button @click="deleteCartItem(item.id)" class="btn btn-danger">
+          <button @click="deleteItem(itemId)" class="btn btn-danger">
             刪除
           </button>
         </td>
@@ -23,7 +23,19 @@
     </tbody>
   </table>
 
-  <p class="total text-end text-success fw-bolder fs-4 pt-2">
+  <div class="noCart" v-else>
+    <p class="fs-3">購物車內沒有商品，趕快去逛逛吧！</p>
+    <router-link
+      to="/shop/all"
+      class="btn btn-lg btn-outline-success my-5 returnBtn"
+      >回商店</router-link
+    >
+  </div>
+
+  <p
+    class="total text-end text-success fw-bolder fs-4 pt-2"
+    v-if="myCart.length"
+  >
     總金額：<span>{{ totalPrice }}</span
     >元
   </p>
@@ -65,9 +77,19 @@ export default {
   },
   methods: {
     ...mapActions('moduleFrontPage', ['getCart', 'deleteCartItem']),
+    deleteItem(itemId) {
+      const vm = this;
+
+      for (const c of vm.carts) {
+        if (c.product_id === itemId) {
+          vm.deleteCartItem(c.id);
+        }
+      }
+      setTimeout(() => vm.getCart(), 1000);
+    },
   },
   created() {
-    this.getCart(); // 一次只會刪除一單位的產品，而且之後要重複取得購物車資料
+    this.getCart();
   },
 };
 </script>
@@ -75,5 +97,8 @@ export default {
 <style lang="scss">
 .table > tbody > tr > td {
   vertical-align: middle;
+}
+.returnBtn:hover {
+  color: #fff;
 }
 </style>

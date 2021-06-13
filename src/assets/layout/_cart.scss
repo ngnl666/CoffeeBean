@@ -28,12 +28,20 @@
 
   &__btn {
     display: flex;
-    justify-content: flex-end;
-    padding-right: 1rem;
+    justify-content: space-around;
+
+    :hover {
+      color: $color-white;
+    }
   }
 
   &__myBtn {
     background-color: $color-blue;
+    color: $color-white;
+  }
+
+  &__cancelBtn {
+    background-color: $color-grey;
     color: $color-white;
   }
 }

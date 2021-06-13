@@ -23,7 +23,9 @@
         ></router-link>
       </li>
       <li>
-        <router-link to="/cart" class="navigation__link hvr-forward"
+        <router-link
+          to="/cart/customer_cart"
+          class="navigation__link hvr-forward"
           ><i class="navigation__icon--white fas fa-shopping-cart"></i
         ></router-link>
       </li>

@@ -1,5 +1,6 @@
 <template>
   <Alert v-if="isAlert" />
+
   <Navbar />
   <Banner />
   <main class="shop">

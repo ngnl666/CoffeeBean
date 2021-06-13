@@ -226,7 +226,7 @@ export default createStore({
     setIsAlert(state) {
       setTimeout(() => {
         state.isAlert = false;
-      }, 3000);
+      }, 1000);
     },
   },
   actions: {},
