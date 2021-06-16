@@ -1,5 +1,11 @@
 <template>
   <Alert v-if="isAlert" />
+  <loading
+    v-model:active="isLoading"
+    :can-cancel="true"
+    :is-full-page="status.fullPage"
+    :color="status.color"
+  />
 
   <Navbar />
   <Banner />
@@ -115,6 +121,8 @@
 
 <script>
 import { mapState, mapActions, mapMutations } from 'vuex';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import Alert from '../components/Alert.vue';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
@@ -124,6 +132,7 @@ import Footer from '../components/Footer.vue';
 
 export default {
   components: {
+    Loading,
     Alert,
     Navbar,
     Banner,
@@ -139,11 +148,16 @@ export default {
         classic: ['生活用品-life', '隨行杯-cup'],
       },
       bgActive: false,
+      status: {
+        fileUploading: false,
+        fullPage: true,
+        color: '#bb9175',
+      },
     };
   },
   computed: {
     ...mapState('moduleFrontPage', ['products', 'pagination']),
-    ...mapState(['isAlert']),
+    ...mapState(['isAlert', 'isLoading']),
     activeList() {
       return this.$route.params.list;
     },

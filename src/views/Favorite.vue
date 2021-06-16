@@ -1,4 +1,10 @@
 <template>
+  <loading
+    v-model:active="isLoading"
+    :can-cancel="true"
+    :is-full-page="status.fullPage"
+    :color="status.color"
+  />
   <Navbar />
   <Banner />
   <div class="favorite">
@@ -35,6 +41,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
 import Card from '../components/Card.vue';
@@ -42,6 +50,7 @@ import Footer from '../components/Footer.vue';
 
 export default {
   components: {
+    Loading,
     Navbar,
     Banner,
     Card,
@@ -50,10 +59,16 @@ export default {
   data() {
     return {
       coupons: '',
+      status: {
+        fileUploading: false,
+        fullPage: true,
+        color: '#bb9175',
+      },
     };
   },
   computed: {
     ...mapState('moduleFrontPage', ['staredProducts', 'products']),
+    ...mapState(['isLoading']),
     favoriteProducts() {
       return this.products.filter(p => this.staredProducts.includes(p.id));
     },

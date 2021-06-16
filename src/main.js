@@ -18,6 +18,7 @@ router.beforeEach((to, from, next) => {
       .catch(error => console.log(error.message));
   } else {
     next();
+
     if (
       (to.name !== 'List' && to.name !== 'Item') ||
       to.fullPath.split('/')[2] === 'all'

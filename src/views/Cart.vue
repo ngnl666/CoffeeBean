@@ -73,12 +73,12 @@ export default {
       status: {
         fileUploading: false,
         fullPage: true,
-        color: '#20c997',
+        color: '#bb9175',
       },
     };
   },
   computed: {
-    ...mapState('moduleAdmin', ['isLoading']),
+    ...mapState(['isLoading']),
     curUrl() {
       let routerName;
 
@@ -118,7 +118,7 @@ export default {
   },
   methods: {
     ...mapMutations('moduleFrontPage', ['setBgActive']),
-    ...mapMutations('moduleAdmin', ['setIsLoading']),
+    ...mapMutations(['setIsLoading']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
       this.setBgActive(this.bgActive);

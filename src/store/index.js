@@ -7,7 +7,7 @@ const moduleAdmin = {
     products: [],
     coupons: [],
     orders: [],
-    isLoading: false,
+    // isLoading: false,
   }),
   mutations: {
     setProducts(state, payload) {
@@ -19,14 +19,14 @@ const moduleAdmin = {
     setOrders(state, payload) {
       state.orders = payload;
     },
-    setIsLoading(state, payload) {
-      state.isLoading = payload;
-    },
+    // setIsLoading(state, payload) {
+    //   state.isLoading = payload;
+    // },
   },
   actions: {
     getProducts({ commit }, page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/products?page=${page}`;
-      commit('setIsLoading', true);
+      commit('setIsLoading', true, { root: true });
 
       axios
         .get(api)
@@ -36,7 +36,7 @@ const moduleAdmin = {
             commit('setIsAlert', null, { root: true });
             return;
           }
-          commit('setIsLoading', false);
+          commit('setIsLoading', false, { root: true });
           commit('setProducts', res.data.products);
           commit('setPagination', res.data.pagination, { root: true });
         })
@@ -44,7 +44,7 @@ const moduleAdmin = {
     },
     getCoupons({ commit }, page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/coupons?page=${page}`;
-      commit('setIsLoading', true);
+      commit('setIsLoading', true, { root: true });
 
       axios
         .get(api)
@@ -54,7 +54,7 @@ const moduleAdmin = {
             commit('setIsAlert', null, { root: true });
             return;
           }
-          commit('setIsLoading', false);
+          commit('setIsLoading', false, { root: true });
           commit('setCoupons', res.data.coupons);
           commit('setPagination', res.data.pagination, { root: true });
         })
@@ -62,7 +62,7 @@ const moduleAdmin = {
     },
     getOrders({ commit }, page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/admin/orders?page=${page}`;
-      commit('setIsLoading', true);
+      commit('setIsLoading', true, { root: true });
 
       axios
         .get(api)
@@ -72,7 +72,7 @@ const moduleAdmin = {
             commit('setIsAlert', null, { root: true });
             return;
           }
-          commit('setIsLoading', false);
+          commit('setIsLoading', false, { root: true });
           commit('setOrders', res.data.coupons);
           commit('setPagination', res.data.pagination);
         })
@@ -88,6 +88,7 @@ const moduleFrontPage = {
     products: [],
     staredProducts: [],
     myCoupons: [],
+    originCart: [],
     carts: '',
     pagination: {},
   }),
@@ -120,8 +121,21 @@ const moduleFrontPage = {
       state.myCoupons = JSON.parse(localStorage.getItem('myCoupons')) || [];
       state.myCoupons.push(payload);
     },
+    setOriginCart(state, payload) {
+      state.originCart = payload;
+    },
     setCart(state, payload) {
-      state.carts = payload;
+      const map = new Map();
+
+      for (const c of payload) {
+        !map.get(c.product_id)
+          ? map.set(c.product_id, c)
+          : (map.get(c.product_id).qty += c.qty);
+      }
+      for (const [, item] of map) {
+        item.final_total = item.total * item.qty;
+      }
+      state.carts = [...map];
     },
     setPagination(state, payload) {
       state.pagination = {
@@ -137,6 +151,8 @@ const moduleFrontPage = {
   actions: {
     getProducts({ commit }, page = 1) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/products/all`;
+      commit('setIsLoading', true, { root: true });
+
       axios
         .get(api)
         .then(res => {
@@ -150,6 +166,7 @@ const moduleFrontPage = {
             total_pages: Math.ceil(res.data.products.length / 6),
             current_page: page,
           });
+          commit('setIsLoading', false, { root: true });
         })
         .catch(error => {
           console.log(error.message);
@@ -157,6 +174,8 @@ const moduleFrontPage = {
     },
     getCart({ commit }) {
       const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/cart`;
+      commit('setIsLoading', true, { root: true });
+
       axios
         .get(api)
         .then(res => {
@@ -166,6 +185,8 @@ const moduleFrontPage = {
             return;
           }
           commit('setCart', res.data.data.carts);
+          commit('setOriginCart', res.data.data.carts);
+          commit('setIsLoading', false, { root: true });
         })
         .catch(error => {
           console.log(error.message);
@@ -213,6 +234,7 @@ export default createStore({
     pagination: {},
     alertMsg: '',
     isAlert: false,
+    isLoading: false,
   },
   getters: {},
   mutations: {
@@ -227,6 +249,9 @@ export default createStore({
       setTimeout(() => {
         state.isAlert = false;
       }, 1000);
+    },
+    setIsLoading(state, payload) {
+      state.isLoading = payload;
     },
   },
   actions: {},
