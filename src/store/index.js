@@ -7,7 +7,6 @@ const moduleAdmin = {
     products: [],
     coupons: [],
     orders: [],
-    // isLoading: false,
   }),
   mutations: {
     setProducts(state, payload) {
@@ -19,9 +18,6 @@ const moduleAdmin = {
     setOrders(state, payload) {
       state.orders = payload;
     },
-    // setIsLoading(state, payload) {
-    //   state.isLoading = payload;
-    // },
   },
   actions: {
     getProducts({ commit }, page = 1) {
@@ -90,6 +86,11 @@ const moduleFrontPage = {
     myCoupons: [],
     originCart: [],
     carts: '',
+    couponCode: '',
+    finalTotal: '',
+    orderId: '',
+    formData: '',
+    order: '',
     pagination: {},
   }),
   mutations: {
@@ -136,6 +137,21 @@ const moduleFrontPage = {
         item.final_total = item.total * item.qty;
       }
       state.carts = [...map];
+    },
+    setFinalTotal(state, payload) {
+      state.finalTotal = payload;
+    },
+    setCouponCode(state, payload) {
+      state.couponCode = payload;
+    },
+    setOrderId(state, payload) {
+      state.orderId = payload;
+    },
+    setFormData(state, payload) {
+      state.formData = payload;
+    },
+    setOrder(state, payload) {
+      state.order = payload;
     },
     setPagination(state, payload) {
       state.pagination = {
@@ -223,6 +239,59 @@ const moduleFrontPage = {
           }
           commit('setAlertMsg', '刪除成功!', { root: true });
           commit('setIsAlert', null, { root: true });
+        })
+        .catch(error => console.log(error.message));
+    },
+    applyCoupon({ commit }, code) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/coupon`;
+
+      axios
+        .post(api, { data: { code } })
+        .then(res => {
+          if (!res.data.success) {
+            commit('setAlertMsg', res.data.message, { root: true });
+            commit('setIsAlert', null, { root: true });
+            return;
+          }
+
+          commit('setFinalTotal', res.data.data.final_total);
+          commit('setCouponCode', code);
+          commit('setAlertMsg', res.data.message, { root: true });
+          commit('setIsAlert', null, { root: true });
+        })
+        .catch(error => console.log(error.message));
+    },
+    confirmOrder({ commit }, formData) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order`;
+
+      axios
+        .post(api, { data: formData })
+        .then(res => {
+          if (!res.data.success) {
+            commit('setAlertMsg', res.data.message, { root: true });
+            commit('setIsAlert', null, { root: true });
+            return;
+          }
+
+          commit('setOrderId', res.data.orderId);
+          commit('setAlertMsg', res.data.message, { root: true });
+          commit('setIsAlert', null, { root: true });
+        })
+        .catch(error => console.log(error.message));
+    },
+    getOrder({ commit }, orderId) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/order/${orderId}`;
+
+      axios
+        .get(api)
+        .then(res => {
+          if (!res.data.success) {
+            commit('setAlertMsg', '找不到訂單資訊', { root: true });
+            commit('setIsAlert', null, { root: true });
+            return;
+          }
+
+          commit('setOrder', res.data.order);
         })
         .catch(error => console.log(error.message));
     },

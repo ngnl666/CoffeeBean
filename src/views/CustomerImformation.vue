@@ -1,4 +1,5 @@
 <template>
+  <Alert v-if="isAlert" />
   <div class="userinfo mb-3">
     <div class="userinfo__input-group col-6 me-5">
       <Form v-slot="{ errors }">
@@ -12,7 +13,8 @@
             name="name"
             rules="required"
             :class="{ 'is-invalid': errors.name }"
-          />{{ errors }}
+            v-model="form.user.name"
+          />
           <ErrorMessage class="text-danger" name="name" />
           <label for="name">姓名</label>
         </div>
@@ -25,8 +27,10 @@
             id="tel"
             name="tel"
             rules="required|minMaxLength:8,10"
+            :class="{ 'is-invalid': errors.tel }"
+            v-model="form.user.tel"
           />
-          <ErrorMessage name="tel" />
+          <ErrorMessage class="text-danger" name="tel" />
           <label for="tel">電話</label>
         </div>
         <div class="form-floating mb-3">
@@ -38,8 +42,10 @@
             id="email"
             name="email"
             rules="required|email"
+            :class="{ 'is-invalid': errors.email }"
+            v-model="form.user.email"
           />
-          <ErrorMessage name="email" />
+          <ErrorMessage class="text-danger" name="email" />
           <label for="email">電子信箱</label>
         </div>
         <div class="form-floating mb-3">
@@ -51,8 +57,10 @@
             id="addr"
             name="addr"
             rules="required"
+            :class="{ 'is-invalid': errors.addr }"
+            v-model="form.user.address"
           />
-          <ErrorMessage name="addr" />
+          <ErrorMessage class="text-danger" name="addr" />
           <label for="addr">地址</label>
         </div>
         <Field
@@ -60,16 +68,22 @@
           as="select"
           name="paid"
           rules="required"
-          placeholder="地址"
+          :class="{ 'is-invalid': errors.paid }"
         >
-          <option disabled>請選擇支付方式</option>
+          <option selected disabled>請選擇支付方式</option>
           <option value="credit">刷卡</option>
           <option value="atm">ATM 轉帳</option>
         </Field>
-        <ErrorMessage name="paid" />
+        <ErrorMessage class="text-danger" name="paid" />
         <div class="input-group my-3">
-          <input type="text" class="form-control" />
-          <button class="btn btn-success text-light" type="button">套用</button>
+          <input v-model="code" type="text" class="form-control" />
+          <button
+            @click="useCoupon()"
+            class="btn btn-success text-light"
+            type="button"
+          >
+            套用
+          </button>
         </div>
       </Form>
     </div>
@@ -85,8 +99,11 @@
           </td>
         </tr>
       </table>
-      <p class="userinfo__coupon text-center text-success fw-bolder fs-4">
-        <i class="fas fa-ticket-alt me-1"></i>COFFEE520
+      <p
+        v-if="finalTotal"
+        class="userinfo__coupon text-center text-success fw-bolder fs-4"
+      >
+        <i class="fas fa-ticket-alt me-1"></i>{{ couponCode }}
       </p>
       <p class="userinfo__total text-start text-dark fw-bolder fs-5 pt-1">
         總金額
@@ -103,6 +120,7 @@
         placeholder="留言備註"
         id="floatingTextarea2"
         style="height: 100px"
+        v-model="form.message"
       ></textarea>
       <label for="floatingTextarea2">留言備註</label>
     </div>
@@ -110,8 +128,9 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import { Form, Field, ErrorMessage, defineRule } from 'vee-validate';
+import Alert from '../components/Alert.vue';
 
 defineRule('required', value => {
   if (!value || !value.length) {
@@ -123,7 +142,11 @@ defineRule('email', value => {
   if (!value || !value.length) {
     return true;
   }
-  if (!/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}/.test(value)) {
+  if (
+    !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      value
+    )
+  ) {
     return 'Email 必須為正確格式';
   }
   return true;
@@ -147,20 +170,49 @@ export default {
     Form,
     Field,
     ErrorMessage,
+    Alert,
   },
   data() {
-    return {};
+    return {
+      code: '',
+      form: {
+        user: {
+          name: '',
+          email: '',
+          tel: '',
+          address: '',
+        },
+        message: '',
+      },
+    };
+  },
+  watch: {
+    form: {
+      deep: true,
+      handler(val) {
+        this.setFormData(val);
+      },
+    },
   },
   computed: {
-    ...mapState('moduleFrontPage', ['carts']),
+    ...mapState('moduleFrontPage', ['carts', 'finalTotal', 'couponCode']),
+    ...mapState(['isAlert']),
     totalPrice() {
-      return this.carts.reduce((acc, cur) => {
-        return acc + cur[1].final_total;
-      }, 0);
+      if (this.finalTotal) {
+        return Math.round(this.finalTotal);
+      } else {
+        return this.carts.reduce((acc, cur) => {
+          return acc + cur[1].final_total;
+        }, 0);
+      }
     },
   },
   methods: {
-    ...mapActions('moduleFrontPage', ['getCart']),
+    ...mapActions('moduleFrontPage', ['getCart', 'applyCoupon']),
+    ...mapMutations('moduleFrontPage', ['setFormData']),
+    useCoupon() {
+      this.applyCoupon(this.code);
+    },
   },
   created() {
     this.getCart();

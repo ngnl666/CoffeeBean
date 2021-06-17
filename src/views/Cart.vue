@@ -35,6 +35,7 @@
         <router-link
           :to="`/cart/${cartState.path}`"
           class="myBtn cart__myBtn"
+          @click="confirm"
           >{{ curUrl }}</router-link
         >
       </div>
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-import { mapMutations, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Navbar from '../components/Navbar.vue';
@@ -78,6 +79,7 @@ export default {
     };
   },
   computed: {
+    ...mapState('moduleFrontPage', ['formData']),
     ...mapState(['isLoading']),
     curUrl() {
       let routerName;
@@ -117,11 +119,19 @@ export default {
     },
   },
   methods: {
+    ...mapActions('moduleFrontPage', ['confirmOrder']),
     ...mapMutations('moduleFrontPage', ['setBgActive']),
     ...mapMutations(['setIsLoading']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
       this.setBgActive(this.bgActive);
+    },
+    confirm() {
+      if (this.$route.name === 'CustomerImformation') {
+        this.confirmOrder(this.formData);
+      } else {
+        return;
+      }
     },
   },
   created() {
