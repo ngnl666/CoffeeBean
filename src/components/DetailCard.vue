@@ -126,15 +126,19 @@ export default {
     },
   },
   methods: {
-    ...mapActions('moduleFrontPage', ['getProducts', 'addCart']),
-    ...mapMutations('moduleFrontPage', ['setBgActive']),
+    ...mapActions('moduleFrontPage', ['getProducts']),
+    ...mapMutations('moduleFrontPage', ['setBgActive', 'setTempCart']),
+    ...mapMutations(['setIsAlert', 'setAlertMsg']),
     addToCart(cartItem) {
       const vm = this;
-      this.addCart(cartItem);
+
+      this.setTempCart(cartItem);
       this.isAnimation = true;
       setTimeout(() => {
         vm.isAnimation = false;
       }, 1000);
+      this.setAlertMsg('加入購物車成功');
+      this.setIsAlert();
     },
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;

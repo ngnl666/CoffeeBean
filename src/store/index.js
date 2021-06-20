@@ -84,6 +84,7 @@ const moduleFrontPage = {
     products: [],
     staredProducts: [],
     myCoupons: [],
+    tempCart: new Map(),
     originCart: [],
     carts: '',
     couponCode: '',
@@ -93,6 +94,28 @@ const moduleFrontPage = {
     order: {},
     pagination: {},
   }),
+  getters: {
+    myCart(state) {
+      const cart = [...state.tempCart];
+      const finalCart = [];
+
+      cart.forEach(([pid, qty]) => {
+        state.products.forEach(item => {
+          if (pid === item.id) {
+            finalCart.push({
+              title: item.title,
+              qty: qty,
+              product_id: pid,
+              unit: item.unit,
+              original_price: item.original_price,
+              price: item.price,
+            });
+          }
+        });
+      });
+      return finalCart;
+    },
+  },
   mutations: {
     setBgActive(state, payload) {
       state.bgActive = payload;
@@ -121,6 +144,18 @@ const moduleFrontPage = {
     setMyCoupons(state, payload) {
       state.myCoupons = JSON.parse(localStorage.getItem('myCoupons')) || [];
       state.myCoupons.push(payload);
+    },
+    setTempCart(state, payload) {
+      if (state.tempCart.get(payload.product_id)) {
+        let qty = state.tempCart.get(payload.product_id);
+        qty += payload.qty;
+        state.tempCart.set(payload.product_id, qty);
+      } else {
+        state.tempCart.set(payload.product_id, payload.qty);
+      }
+    },
+    delTempCart(state, payload) {
+      state.tempCart.delete(payload);
     },
     setOriginCart(state, payload) {
       state.originCart = payload;
@@ -325,7 +360,6 @@ export default createStore({
     isAlert: false,
     isLoading: false,
   },
-  getters: {},
   mutations: {
     setPagination(state, payload) {
       state.pagination = payload;

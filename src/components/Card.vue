@@ -37,7 +37,7 @@
 
     <div class="productCard__cart">
       <i
-        @click="addCart({ product_id: product.id, qty: 1 })"
+        @click="addToCart({ product_id: product.id, qty: 1 })"
         class="fas fa-shopping-cart productCard__icon hvr-bounce-in"
       ></i>
     </div>
@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex';
+import { mapMutations } from 'vuex';
 
 export default {
   props: ['product'],
@@ -56,8 +56,20 @@ export default {
     ...mapMutations('moduleFrontPage', [
       'setStaredProducts',
       'removeStaredProducts',
+      'setTempCart',
     ]),
-    ...mapActions('moduleFrontPage', ['addCart']),
+    ...mapMutations(['setIsAlert', 'setAlertMsg']),
+    addToCart(cartItem) {
+      const vm = this;
+
+      this.setTempCart(cartItem);
+      this.isAnimation = true;
+      setTimeout(() => {
+        vm.isAnimation = false;
+      }, 1000);
+      this.setAlertMsg('加入購物車成功');
+      this.setIsAlert();
+    },
     isStared(state) {
       state
         ? this.setStaredProducts(this.product)

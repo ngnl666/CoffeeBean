@@ -1,6 +1,6 @@
 <template>
   <Alert v-if="isAlert" />
-  <table class="table table-striped table-hover" v-if="carts.length">
+  <table class="table table-striped table-hover" v-if="myCart.length">
     <thead>
       <tr class="fs-5">
         <th width="300px" scope="col">商品</th>
@@ -10,15 +10,16 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="[itemId, item] in carts" :key="itemId">
-        <th class="fs-6" scope="row">{{ item.product.title }}</th>
-        <td>{{ item.qty }} {{ item.product.unit }}</td>
-        <td>${{ item.final_total }}</td>
+      <tr v-for="item in myCart" :key="item.product_id">
+        <th class="fs-6" scope="row">{{ item.title }}</th>
+        <td>{{ item.qty }} {{ item.unit }}</td>
+        <td>${{ item.price * item.qty }}</td>
         <td>
-          <button @click="deleteItem(itemId)" class="btn btn-danger">
+          <button @click="deleteItem(item.product_id)" class="btn btn-danger">
             刪除
           </button>
         </td>
+        <!-- localstorage & 舊cart-->
       </tr>
     </tbody>
   </table>
@@ -32,14 +33,14 @@
     >
   </div>
 
-  <p class="total text-end text-dark fw-bolder fs-4 pt-2" v-if="carts.length">
+  <p class="total text-end text-dark fw-bolder fs-4 pt-2" v-if="myCart.length">
     總金額：<span class="text-danger">{{ totalPrice }}</span
     >元
   </p>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapGetters, mapActions, mapState, mapMutations } from 'vuex';
 import Alert from '../components/Alert.vue';
 
 export default {
@@ -50,25 +51,21 @@ export default {
   computed: {
     ...mapState('moduleFrontPage', ['carts', 'originCart']),
     ...mapState(['isAlert']),
-    myCarts() {
-      return this;
-    },
+    ...mapGetters('moduleFrontPage', ['myCart']),
     totalPrice() {
-      return this.carts.reduce((acc, cur) => {
-        return acc + cur[1].final_total;
+      return this.myCart.reduce((acc, cur) => {
+        return acc + cur.price * cur.qty;
       }, 0);
     },
   },
   methods: {
     ...mapActions('moduleFrontPage', ['getCart', 'deleteCartItem']),
+    ...mapMutations('moduleFrontPage', ['delTempCart']),
+    ...mapMutations(['setAlertMsg', 'setIsAlert']),
     deleteItem(itemId) {
-      const vm = this;
-      for (const c of vm.originCart) {
-        if (c.product_id === itemId) {
-          vm.deleteCartItem(c.id);
-        }
-      }
-      setTimeout(() => vm.getCart(), 1000);
+      this.delTempCart(itemId);
+      this.setAlertMsg('刪除商品成功');
+      this.setIsAlert();
     },
   },
   created() {

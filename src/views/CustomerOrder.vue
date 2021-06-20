@@ -74,8 +74,7 @@ export default {
     },
   },
   created() {
-    const vm = this;
-    vm.getOrder(vm.orderId);
+    this.getOrder(this.orderId);
   },
 };
 </script>
