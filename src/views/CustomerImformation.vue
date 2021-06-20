@@ -33,6 +33,7 @@
           <ErrorMessage class="text-danger" name="tel" />
           <label for="tel">電話</label>
         </div>
+        <p>hh@gmail.com</p>
         <div class="form-floating mb-3">
           <Field
             type="email"
@@ -69,10 +70,11 @@
           name="paid"
           rules="required"
           :class="{ 'is-invalid': errors.paid }"
+          v-model="form.user.pay"
         >
           <option selected disabled>請選擇支付方式</option>
-          <option value="credit">刷卡</option>
-          <option value="atm">ATM 轉帳</option>
+          <option value="刷卡">刷卡</option>
+          <option value="ATM轉帳">ATM 轉帳</option>
         </Field>
         <ErrorMessage class="text-danger" name="paid" />
         <div class="input-group my-3">
@@ -94,7 +96,7 @@
       </p>
       <table class="table">
         <tr v-for="[itemId, item] in carts" :key="itemId">
-          <td style="height: 35px">
+          <td class="text-center" style="height: 35px">
             {{ item.product.title }} {{ item.final_total }}
           </td>
         </tr>
@@ -181,6 +183,7 @@ export default {
           email: '',
           tel: '',
           address: '',
+          pay: '',
         },
         message: '',
       },
@@ -228,6 +231,7 @@ export default {
 
   &__paid {
     padding: 0.5rem 2rem;
+    width: 40%;
     border: 2px solid $color-primary;
     border-radius: 1rem;
   }

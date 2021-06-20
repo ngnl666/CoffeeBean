@@ -41,7 +41,11 @@ export default {
   name: 'Pagination',
   computed: {
     pagination() {
-      if (this.$route.name === 'ProductList' || this.$route.name === 'Coupon') {
+      if (
+        this.$route.name === 'ProductList' ||
+        this.$route.name === 'Coupon' ||
+        this.$route.name === 'Order'
+      ) {
         return this.$store.state.pagination;
       } else {
         return this.$store.state.moduleFrontPage.pagination;
@@ -49,7 +53,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('moduleAdmin', ['getProducts', 'getCoupons']),
+    ...mapActions('moduleAdmin', ['getProducts', 'getCoupons', 'getOrders']),
     ...mapMutations('moduleFrontPage', ['setPagination']),
     updatePage(page, state) {
       switch (this.$route.name) {
@@ -58,6 +62,9 @@ export default {
           break;
         case 'Coupon':
           this.getCoupons(page);
+          break;
+        case 'Order':
+          this.getOrders(page);
           break;
         case 'Shop':
         case 'List':

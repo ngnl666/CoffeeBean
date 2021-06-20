@@ -17,21 +17,22 @@
       </tr>
     </thead>
     <tbody>
-      <tr>
-        <td>{{ 123 }}</td>
-        <td>{{ 456 }}</td>
+      <tr v-for="(item, key) in orders" :key="key">
+        <td>{{ createOrderDate(item.create_at) }}</td>
+        <td>{{ item.user?.email }}</td>
         <td>
-          <ul class="list-unstyled">
-            <li>
-              {{ 333 }} 數量 {{ 777 }}
-              {{ 111 }}
-            </li>
+          <ul
+            v-for="(p, key) in item.products"
+            :key="key"
+            class="list-unstyled"
+          >
+            <li>{{ p.product.title }} * {{ p.qty }}</li>
           </ul>
         </td>
-        <td>{{ 222 }}</td>
+        <td>$ {{ item.total }}</td>
         <td>
-          <strong class="text-success">已付款</strong>
-          <!-- <span v-else class="text-mutes">未付款</span> -->
+          <strong v-if="item.is_paid" class="text-success">已付款</strong>
+          <span v-else class="text-mutes">未付款</span>
         </td>
       </tr>
     </tbody>
@@ -63,6 +64,12 @@ export default {
   },
   computed: {
     ...mapState('moduleAdmin', ['isLoading', 'orders']),
+  },
+  methods: {
+    createOrderDate(timestamp) {
+      const time = new Date(timestamp * 1000);
+      return `${time.getFullYear()}/${time.getMonth() + 1}/${time.getDate()}`;
+    },
   },
   created() {
     this.$store.dispatch('moduleAdmin/getOrders');

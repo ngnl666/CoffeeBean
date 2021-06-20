@@ -33,6 +33,7 @@
           >回購物車</router-link
         >
         <router-link
+          v-if="carts.length > 0"
           :to="`/cart/${cartState.path}`"
           class="myBtn cart__myBtn"
           @click="confirm"
@@ -79,7 +80,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('moduleFrontPage', ['formData']),
+    ...mapState('moduleFrontPage', ['formData', 'orderId', 'carts']),
     ...mapState(['isLoading']),
     curUrl() {
       let routerName;
@@ -119,7 +120,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions('moduleFrontPage', ['confirmOrder']),
+    ...mapActions('moduleFrontPage', ['confirmOrder', 'confirmPay', 'getCart']),
     ...mapMutations('moduleFrontPage', ['setBgActive']),
     ...mapMutations(['setIsLoading']),
     handleScroll() {
@@ -127,15 +128,20 @@ export default {
       this.setBgActive(this.bgActive);
     },
     confirm() {
+      const vm = this;
+
       if (this.$route.name === 'CustomerImformation') {
-        this.confirmOrder(this.formData);
+        vm.confirmOrder(vm.formData);
+      } else if (this.$route.name === 'CustomerOrder') {
+        vm.confirmPay(vm.orderId);
       } else {
-        return;
+        return true;
       }
     },
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);
+    this.getCart();
   },
   beforeRouteUpdate() {
     this.setIsLoading(true);

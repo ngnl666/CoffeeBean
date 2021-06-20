@@ -69,8 +69,8 @@ const moduleAdmin = {
             return;
           }
           commit('setIsLoading', false, { root: true });
-          commit('setOrders', res.data.coupons);
-          commit('setPagination', res.data.pagination);
+          commit('setOrders', res.data.orders);
+          commit('setPagination', res.data.pagination, { root: true });
         })
         .catch(error => console.log(error.message));
     },
@@ -90,7 +90,7 @@ const moduleFrontPage = {
     finalTotal: '',
     orderId: '',
     formData: '',
-    order: '',
+    order: {},
     pagination: {},
   }),
   mutations: {
@@ -152,6 +152,9 @@ const moduleFrontPage = {
     },
     setOrder(state, payload) {
       state.order = payload;
+    },
+    setPaid(state, payload) {
+      state.order.is_paid = payload;
     },
     setPagination(state, payload) {
       state.pagination = {
@@ -290,8 +293,25 @@ const moduleFrontPage = {
             commit('setIsAlert', null, { root: true });
             return;
           }
-
           commit('setOrder', res.data.order);
+        })
+        .catch(error => console.log(error.message));
+    },
+    confirmPay({ commit }, orderId) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_CUSTOMPATH}/pay/${orderId}`;
+
+      axios
+        .post(api)
+        .then(res => {
+          if (!res.data.success) {
+            commit('setAlertMsg', '付款失敗', { root: true });
+            commit('setIsAlert', null, { root: true });
+            return;
+          }
+
+          commit('setPaid', true);
+          commit('setAlertMsg', res.data.message, { root: true });
+          commit('setIsAlert', null, { root: true });
         })
         .catch(error => console.log(error.message));
     },
