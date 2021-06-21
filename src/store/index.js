@@ -85,8 +85,7 @@ const moduleFrontPage = {
     staredProducts: [],
     myCoupons: [],
     tempCart: new Map(),
-    originCart: [],
-    carts: '',
+    carts: [],
     couponCode: '',
     finalTotal: '',
     orderId: '',
@@ -157,21 +156,11 @@ const moduleFrontPage = {
     delTempCart(state, payload) {
       state.tempCart.delete(payload);
     },
-    setOriginCart(state, payload) {
-      state.originCart = payload;
+    delAllTempCart(state) {
+      state.tempCart = new Map();
     },
     setCart(state, payload) {
-      const map = new Map();
-
-      for (const c of payload) {
-        !map.get(c.product_id)
-          ? map.set(c.product_id, c)
-          : (map.get(c.product_id).qty += c.qty);
-      }
-      for (const [, item] of map) {
-        item.final_total = item.total * item.qty;
-      }
-      state.carts = [...map];
+      state.carts = payload;
     },
     setFinalTotal(state, payload) {
       state.finalTotal = payload;
@@ -239,7 +228,6 @@ const moduleFrontPage = {
             return;
           }
           commit('setCart', res.data.data.carts);
-          commit('setOriginCart', res.data.data.carts);
           commit('setIsLoading', false, { root: true });
         })
         .catch(error => {
@@ -253,11 +241,11 @@ const moduleFrontPage = {
         .post(api, { data: cartItem })
         .then(res => {
           if (!res.data.success) {
-            commit('setAlertMsg', '加入購物車失敗', { root: true });
+            commit('setAlertMsg', '商品加入失敗', { root: true });
             commit('setIsAlert', null, { root: true });
             return;
           }
-          commit('setAlertMsg', '加入購物車成功!', { root: true });
+          commit('setAlertMsg', '商品加入成功!', { root: true });
           commit('setIsAlert', null, { root: true });
         })
         .catch(error => {

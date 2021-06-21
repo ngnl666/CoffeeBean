@@ -27,13 +27,7 @@
       </div>
       <div class="cart__btn">
         <router-link
-          v-if="curUrl === '確認訂單'"
-          to="/cart/customer_cart"
-          class="myBtn cart__cancelBtn"
-          >回購物車</router-link
-        >
-        <router-link
-          v-if="carts.length > 0"
+          v-if="myCart.length > 0"
           :to="`/cart/${cartState.path}`"
           class="myBtn cart__myBtn"
           @click="confirm"
@@ -46,7 +40,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapState } from 'vuex';
+import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Navbar from '../components/Navbar.vue';
@@ -80,8 +74,9 @@ export default {
     };
   },
   computed: {
-    ...mapState('moduleFrontPage', ['formData', 'orderId', 'carts']),
+    ...mapState('moduleFrontPage', ['formData', 'orderId']),
     ...mapState(['isLoading']),
+    ...mapGetters('moduleFrontPage', ['myCart']),
     curUrl() {
       let routerName;
 
@@ -120,8 +115,13 @@ export default {
     },
   },
   methods: {
-    ...mapActions('moduleFrontPage', ['confirmOrder', 'confirmPay', 'getCart']),
-    ...mapMutations('moduleFrontPage', ['setBgActive']),
+    ...mapActions('moduleFrontPage', [
+      'confirmOrder',
+      'confirmPay',
+      'addCart',
+      'getCart',
+    ]),
+    ...mapMutations('moduleFrontPage', ['setBgActive', 'delAllTempCart']),
     ...mapMutations(['setIsLoading']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
@@ -129,19 +129,31 @@ export default {
     },
     confirm() {
       const vm = this;
-
-      if (this.$route.name === 'CustomerImformation') {
-        vm.confirmOrder(vm.formData);
-      } else if (this.$route.name === 'CustomerOrder') {
-        vm.confirmPay(vm.orderId);
-      } else {
-        return true;
+      switch (this.$route.name) {
+        case 'CustomerCart':
+          this.myCart.forEach(item =>
+            this.addCart({ product_id: item.product_id, qty: item.qty })
+          );
+          this.delAllTempCart();
+          break;
+        case 'CustomerImformation':
+          this.confirmOrder(vm.formData);
+          break;
+        case 'CustomerOrder':
+          this.confirmPay(vm.orderId);
+          break;
       }
+      // if (this.$route.name === 'CustomerImformation') {
+      //   vm.confirmOrder(vm.formData);
+      // } else if (this.$route.name === 'CustomerOrder') {
+      //   vm.confirmPay(vm.orderId);
+      // } else {
+      //   return true;
+      // }
     },
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);
-    this.getCart();
   },
   beforeRouteUpdate() {
     this.setIsLoading(true);

@@ -49,7 +49,6 @@ export default {
     return {};
   },
   computed: {
-    ...mapState('moduleFrontPage', ['carts', 'originCart']),
     ...mapState(['isAlert']),
     ...mapGetters('moduleFrontPage', ['myCart']),
     totalPrice() {
@@ -59,17 +58,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions('moduleFrontPage', ['getCart', 'deleteCartItem']),
+    ...mapActions('moduleFrontPage', ['deleteCartItem']),
     ...mapMutations('moduleFrontPage', ['delTempCart']),
-    ...mapMutations(['setAlertMsg', 'setIsAlert']),
     deleteItem(itemId) {
       this.delTempCart(itemId);
-      this.setAlertMsg('刪除商品成功');
-      this.setIsAlert();
+      this.deleteCartItem(itemId);
     },
-  },
-  created() {
-    this.getCart();
   },
 };
 </script>

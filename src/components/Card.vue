@@ -60,13 +60,7 @@ export default {
     ]),
     ...mapMutations(['setIsAlert', 'setAlertMsg']),
     addToCart(cartItem) {
-      const vm = this;
-
       this.setTempCart(cartItem);
-      this.isAnimation = true;
-      setTimeout(() => {
-        vm.isAnimation = false;
-      }, 1000);
       this.setAlertMsg('加入購物車成功');
       this.setIsAlert();
     },

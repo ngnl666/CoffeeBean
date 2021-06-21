@@ -95,22 +95,33 @@
         <i class="fas fa-shopping-cart me-2"></i>購物清單
       </p>
       <table class="table">
-        <tr v-for="[itemId, item] in carts" :key="itemId">
-          <td class="text-center" style="height: 35px">
-            {{ item.product.title }} {{ item.final_total }}
+        <tr v-for="item in carts" :key="item.id">
+          <td style="height: 35px">
+            {{ item.product.title }} {{ item.total }}
           </td>
         </tr>
       </table>
       <p
-        v-if="finalTotal"
         class="userinfo__coupon text-center text-success fw-bolder fs-4"
+        v-if="isUsed"
       >
         <i class="fas fa-ticket-alt me-1"></i>{{ couponCode }}
+      </p>
+      <p
+        class="userinfo__coupon text-center text-success fw-bolder fs-4"
+        v-if="isUsed"
+      >
+        ({{ discount }})
       </p>
       <p class="userinfo__total text-start text-dark fw-bolder fs-5 pt-1">
         總金額
       </p>
-      <p class="text-center text-danger fw-bolder fs-4">{{ totalPrice }}元</p>
+      <p v-if="isUsed" class="text-center text-danger fw-bolder fs-4">
+        {{ finalTotal }}元
+      </p>
+      <p v-else class="text-center text-danger fw-bolder fs-4">
+        {{ totalPrice }}元
+      </p>
     </div>
   </div>
 
@@ -128,10 +139,12 @@
     </div>
   </div>
 </template>
+<!-- localstorage + 刪除舊訂單資料結構 -->
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import { Form, Field, ErrorMessage, defineRule } from 'vee-validate';
+import { couponList } from '../couponList.js';
 import Alert from '../components/Alert.vue';
 
 defineRule('required', value => {
@@ -177,6 +190,7 @@ export default {
   data() {
     return {
       code: '',
+      isUsed: false,
       form: {
         user: {
           name: '',
@@ -196,29 +210,40 @@ export default {
         this.setFormData(val);
       },
     },
+    finalTotal() {
+      this.isUsed = true;
+    },
+    totalPrice() {
+      this.isUsed = false;
+    },
   },
   computed: {
-    ...mapState('moduleFrontPage', ['carts', 'finalTotal', 'couponCode']),
+    ...mapState('moduleFrontPage', ['carts', 'couponCode', 'finalTotal']),
     ...mapState(['isAlert']),
     totalPrice() {
-      if (this.finalTotal) {
-        return Math.round(this.finalTotal);
-      } else {
-        return this.carts.reduce((acc, cur) => {
-          return acc + cur[1].final_total;
-        }, 0);
-      }
+      return this.carts.reduce((acc, cur) => acc + cur.total, 0);
+    },
+    discount() {
+      return couponList.find(c => c.code === this.code)?.name;
     },
   },
   methods: {
-    ...mapActions('moduleFrontPage', ['getCart', 'applyCoupon']),
+    ...mapActions('moduleFrontPage', [
+      'getCart',
+      'applyCoupon',
+      'deleteCartItem',
+    ]),
     ...mapMutations('moduleFrontPage', ['setFormData']),
     useCoupon() {
       this.applyCoupon(this.code);
     },
   },
   created() {
-    this.getCart();
+    const vm = this;
+    setTimeout(() => vm.getCart(), 1000);
+  },
+  beforeUnmount() {
+    this.carts.forEach(item => this.deleteCartItem(item.id));
   },
 };
 </script>
