@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 export default {
   data() {
@@ -42,6 +42,7 @@ export default {
   },
   computed: {
     ...mapState('moduleFrontPage', ['bgActive']),
+    ...mapGetters('moduleFrontPage', ['cartNum']), // 購物車數量圖示
   },
 };
 </script>

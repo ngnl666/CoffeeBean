@@ -84,7 +84,9 @@ const moduleFrontPage = {
     products: [],
     staredProducts: [],
     myCoupons: [],
-    tempCart: new Map(),
+    tempCart: new Map(
+      JSON.parse(localStorage.getItem('storageCart'))?.map(c => [c[0], c[1]])
+    ),
     carts: [],
     couponCode: '',
     finalTotal: '',
@@ -113,6 +115,9 @@ const moduleFrontPage = {
         });
       });
       return finalCart;
+    },
+    cartNum(state) {
+      return Array.from(state.tempCart).length;
     },
   },
   mutations: {
@@ -149,12 +154,21 @@ const moduleFrontPage = {
         let qty = state.tempCart.get(payload.product_id);
         qty += payload.qty;
         state.tempCart.set(payload.product_id, qty);
+        localStorage.setItem(
+          'storageCart',
+          JSON.stringify([...state.tempCart])
+        );
       } else {
         state.tempCart.set(payload.product_id, payload.qty);
+        localStorage.setItem(
+          'storageCart',
+          JSON.stringify([...state.tempCart])
+        );
       }
     },
     delTempCart(state, payload) {
       state.tempCart.delete(payload);
+      localStorage.setItem('storageCart', JSON.stringify([...state.tempCart]));
     },
     delAllTempCart(state) {
       state.tempCart = new Map();
@@ -163,7 +177,7 @@ const moduleFrontPage = {
       state.carts = payload;
     },
     setFinalTotal(state, payload) {
-      state.finalTotal = payload;
+      state.finalTotal = Math.round(payload);
     },
     setCouponCode(state, payload) {
       state.couponCode = payload;

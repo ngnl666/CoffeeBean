@@ -244,6 +244,7 @@ export default {
   },
   beforeUnmount() {
     this.carts.forEach(item => this.deleteCartItem(item.id));
+    localStorage.setItem('storageCart', JSON.stringify([]));
   },
 };
 </script>

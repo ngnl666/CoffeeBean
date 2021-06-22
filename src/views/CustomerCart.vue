@@ -19,7 +19,6 @@
             刪除
           </button>
         </td>
-        <!-- localstorage & 舊cart-->
       </tr>
     </tbody>
   </table>

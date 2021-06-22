@@ -156,7 +156,7 @@ export default {
     };
   },
   computed: {
-    ...mapState('moduleFrontPage', ['products', 'pagination']),
+    ...mapState('moduleFrontPage', ['products', 'pagination', 'tempCart']),
     ...mapState(['isAlert', 'isLoading']),
     activeList() {
       return this.$route.params.list;
