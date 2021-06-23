@@ -17,6 +17,10 @@
   padding: 3rem 7rem;
   margin-bottom: 4rem;
 
+  @include respond(tab-port) {
+    padding-left: 4rem;
+  }
+
   &__title {
     color: $color-primary;
     font-size: $font-xl;
@@ -45,6 +49,11 @@
     &-2,
     &-3 {
       transition: 1s;
+    }
+
+    @include respond(tab-port) {
+      padding: 0;
+      justify-content: space-around;
     }
   }
 

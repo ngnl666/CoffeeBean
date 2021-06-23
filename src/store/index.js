@@ -1,3 +1,4 @@
+import swal from 'sweetalert';
 import { createStore } from 'vuex';
 import axios from 'axios';
 
@@ -68,6 +69,7 @@ const moduleAdmin = {
             commit('setIsAlert', null, { root: true });
             return;
           }
+          res.data.orders.shift();
           commit('setIsLoading', false, { root: true });
           commit('setOrders', res.data.orders);
           commit('setPagination', res.data.pagination, { root: true });
@@ -92,6 +94,8 @@ const moduleFrontPage = {
     finalTotal: '',
     orderId: '',
     formData: '',
+    buttonEnabled: false,
+    jumped: false,
     order: {},
     pagination: {},
   }),
@@ -193,6 +197,12 @@ const moduleFrontPage = {
     },
     setPaid(state, payload) {
       state.order.is_paid = payload;
+    },
+    setJumped(state, payload) {
+      state.jumped = payload;
+    },
+    setButtonEnabled(state, payload) {
+      state.buttonEnabled = payload;
     },
     setPagination(state, payload) {
       state.pagination = {
@@ -349,6 +359,19 @@ const moduleFrontPage = {
           commit('setPaid', true);
           commit('setAlertMsg', res.data.message, { root: true });
           commit('setIsAlert', null, { root: true });
+
+          swal({
+            title: '付款成功!',
+            text: '再回去逛逛吧!',
+            icon: 'success',
+            buttons: {
+              goto: '回商城',
+            },
+          }).then(value => {
+            if (value) {
+              commit('setJumped', true);
+            }
+          });
         })
         .catch(error => console.log(error.message));
     },

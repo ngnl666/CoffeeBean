@@ -12,7 +12,7 @@
       <tr>
         <td>{{ createOrderDate(order.create_at) }}</td>
         <td>{{ orderId }}</td>
-        <td>${{ order.total }}</td>
+        <td>${{ Math.round(order.total) }}</td>
       </tr>
     </tbody>
   </table>
@@ -54,7 +54,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex';
+import { mapActions, mapMutations, mapState } from 'vuex';
 import Alert from '../components/Alert.vue';
 
 export default {
@@ -67,6 +67,7 @@ export default {
     ...mapState(['isAlert']),
   },
   methods: {
+    ...mapMutations('moduleFrontPage', ['setButtonEnabled']),
     ...mapActions('moduleFrontPage', ['getOrder']),
     createOrderDate(timestamp) {
       const time = new Date(timestamp * 1000);
@@ -74,7 +75,9 @@ export default {
     },
   },
   created() {
-    this.getOrder(this.orderId);
+    const vm = this;
+    setTimeout(() => vm.getOrder(this.orderId), 1000);
+    vm.setButtonEnabled(true);
   },
 };
 </script>

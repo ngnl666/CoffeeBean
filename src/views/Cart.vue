@@ -27,7 +27,7 @@
       </div>
       <div class="cart__btn">
         <router-link
-          v-if="myCart.length > 0"
+          v-if="buttonEnabled"
           :to="`/cart/${cartState.path}`"
           class="myBtn cart__myBtn"
           @click="confirm"
@@ -74,7 +74,12 @@ export default {
     };
   },
   computed: {
-    ...mapState('moduleFrontPage', ['formData', 'orderId']),
+    ...mapState('moduleFrontPage', [
+      'formData',
+      'orderId',
+      'jumped',
+      'buttonEnabled',
+    ]),
     ...mapState(['isLoading']),
     ...mapGetters('moduleFrontPage', ['myCart']),
     curUrl() {
@@ -113,6 +118,9 @@ export default {
           break;
       }
     },
+    jumped(val) {
+      if (val) this.$router.push('/shop/all');
+    },
   },
   methods: {
     ...mapActions('moduleFrontPage', [
@@ -121,7 +129,11 @@ export default {
       'addCart',
       'getCart',
     ]),
-    ...mapMutations('moduleFrontPage', ['setBgActive', 'delAllTempCart']),
+    ...mapMutations('moduleFrontPage', [
+      'setBgActive',
+      'delAllTempCart',
+      'setButtonEnabled',
+    ]),
     ...mapMutations(['setIsLoading']),
     handleScroll() {
       this.bgActive = window.scrollY > 0 ? true : false;
@@ -143,19 +155,13 @@ export default {
           this.confirmPay(vm.orderId);
           break;
       }
-      // if (this.$route.name === 'CustomerImformation') {
-      //   vm.confirmOrder(vm.formData);
-      // } else if (this.$route.name === 'CustomerOrder') {
-      //   vm.confirmPay(vm.orderId);
-      // } else {
-      //   return true;
-      // }
     },
   },
   created() {
     window.addEventListener('scroll', this.handleScroll);
   },
   beforeRouteUpdate() {
+    this.setButtonEnabled(false);
     this.setIsLoading(true);
     setTimeout(() => {
       this.setIsLoading(false);

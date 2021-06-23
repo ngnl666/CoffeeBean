@@ -26,8 +26,11 @@
         <router-link
           to="/cart/customer_cart"
           class="navigation__link hvr-forward"
-          ><i class="navigation__icon--white fas fa-shopping-cart"></i
-        ></router-link>
+          ><i class="navigation__icon--white fas fa-shopping-cart"></i>
+          <div v-if="cartNum > 0" class="navigation__cartNum">
+            {{ cartNum }}
+          </div></router-link
+        >
       </li>
     </ul>
   </div>
@@ -42,13 +45,14 @@ export default {
   },
   computed: {
     ...mapState('moduleFrontPage', ['bgActive']),
-    ...mapGetters('moduleFrontPage', ['cartNum']), // 購物車數量圖示
+    ...mapGetters('moduleFrontPage', ['cartNum']),
   },
 };
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/abstracts/variables';
+@import '../assets/abstracts/mixins';
 @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
 
 .navigation {
@@ -62,6 +66,10 @@ export default {
   padding: 0.35rem 1.5rem;
   z-index: 99;
   transition: 0.5s;
+
+  @include respond(tab-port) {
+    // width: 95%;
+  }
 
   &-color {
     background-color: rgba(152, 106, 75, 0.8);
@@ -85,6 +93,7 @@ export default {
     letter-spacing: 2px;
     padding-top: 0.5rem;
     transition: all 0.25s;
+    position: relative;
 
     &:hover {
       color: $color-blue;
@@ -97,6 +106,18 @@ export default {
         transform: rotateY(180deg);
       }
     }
+  }
+
+  &__cartNum {
+    width: 1.4rem;
+    height: 1.4rem;
+    font-size: $font-s;
+    text-align: center;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: -10px;
   }
 }
 

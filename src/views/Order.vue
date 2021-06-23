@@ -29,7 +29,7 @@
             <li>{{ p.product.title }} * {{ p.qty }}</li>
           </ul>
         </td>
-        <td>$ {{ item.total }}</td>
+        <td>$ {{ Math.round(item.total) }}</td>
         <td>
           <strong v-if="item.is_paid" class="text-success">已付款</strong>
           <span v-else class="text-mutes">未付款</span>

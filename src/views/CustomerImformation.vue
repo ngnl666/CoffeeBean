@@ -33,7 +33,6 @@
           <ErrorMessage class="text-danger" name="tel" />
           <label for="tel">電話</label>
         </div>
-        <p>hh@gmail.com</p>
         <div class="form-floating mb-3">
           <Field
             type="email"
@@ -139,7 +138,6 @@
     </div>
   </div>
 </template>
-<!-- localstorage + 刪除舊訂單資料結構 -->
 
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
@@ -208,6 +206,14 @@ export default {
       deep: true,
       handler(val) {
         this.setFormData(val);
+        if (
+          [...document.querySelectorAll('[role="alert"]')].length === 0 &&
+          !Object.values(this.form.user).includes('')
+        ) {
+          this.setButtonEnabled(true);
+        } else {
+          this.setButtonEnabled(false);
+        }
       },
     },
     finalTotal() {
@@ -233,7 +239,7 @@ export default {
       'applyCoupon',
       'deleteCartItem',
     ]),
-    ...mapMutations('moduleFrontPage', ['setFormData']),
+    ...mapMutations('moduleFrontPage', ['setFormData', 'setButtonEnabled']),
     useCoupon() {
       this.applyCoupon(this.code);
     },
@@ -242,7 +248,8 @@ export default {
     const vm = this;
     setTimeout(() => vm.getCart(), 1000);
   },
-  beforeUnmount() {
+  unmounted() {
+    this.setButtonEnabled(false);
     this.carts.forEach(item => this.deleteCartItem(item.id));
     localStorage.setItem('storageCart', JSON.stringify([]));
   },

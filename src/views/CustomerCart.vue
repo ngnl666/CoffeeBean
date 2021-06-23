@@ -47,6 +47,11 @@ export default {
   data() {
     return {};
   },
+  watch: {
+    myCart() {
+      if (this.myCart.length === 0) this.setButtonEnabled(false);
+    },
+  },
   computed: {
     ...mapState(['isAlert']),
     ...mapGetters('moduleFrontPage', ['myCart']),
@@ -58,11 +63,14 @@ export default {
   },
   methods: {
     ...mapActions('moduleFrontPage', ['deleteCartItem']),
-    ...mapMutations('moduleFrontPage', ['delTempCart']),
+    ...mapMutations('moduleFrontPage', ['delTempCart', 'setButtonEnabled']),
     deleteItem(itemId) {
       this.delTempCart(itemId);
       this.deleteCartItem(itemId);
     },
+  },
+  created() {
+    if (this.myCart.length > 0) this.setButtonEnabled(true);
   },
 };
 </script>
