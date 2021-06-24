@@ -6,10 +6,20 @@
   &-1 {
     visibility: hidden;
     transform: translateX(150%);
+
+    @include respond(phone) {
+      visibility: visible;
+      transform: translateX(0);
+    }
   }
   &-3 {
     visibility: hidden;
     transform: translateX(-150%);
+
+    @include respond(phone) {
+      visibility: visible;
+      transform: translateX(0);
+    }
   }
 }
 
@@ -17,8 +27,8 @@
   padding: 3rem 7rem;
   margin-bottom: 4rem;
 
-  @include respond(tab-port) {
-    padding-left: 4rem;
+  @include respond(tab-horizontal) {
+    padding: 3rem 1rem;
   }
 
   &__title {
@@ -39,6 +49,10 @@
   &__in {
     font-size: $font-s;
     text-align: center;
+
+    @include respond(tab-port) {
+      padding: 0.5rem 1.5rem;
+    }
   }
 
   &__section {
@@ -49,11 +63,18 @@
     &-2,
     &-3 {
       transition: 1s;
+
+      @include respond(phone) {
+        margin-bottom: 4rem;
+      }
     }
 
-    @include respond(tab-port) {
+    @include respond(tab-horizontal) {
       padding: 0;
-      justify-content: space-around;
+    }
+
+    @include respond(phone) {
+      display: block;
     }
   }
 
@@ -65,6 +86,11 @@
     margin: 0 auto;
     margin-bottom: 1.5rem;
     box-shadow: 0 2rem 2rem rgba($color-black, 0.2);
+
+    @include respond(phone) {
+      width: 18rem;
+      height: 18rem;
+    }
 
     img {
       width: 100%;
@@ -90,16 +116,32 @@
     margin-bottom: 4rem;
     box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
 
+    @include respond(phone) {
+      height: auto;
+      margin-bottom: 6rem;
+      display: block;
+    }
+
     &-1,
     &-3 {
       margin-left: 4rem;
       border-radius: 3rem 0 0 3rem;
+
+      @include respond(phone) {
+        margin-left: 2rem;
+        display: flex;
+        flex-direction: column-reverse;
+      }
     }
 
     &-2,
     &-4 {
       margin-right: 4rem;
       border-radius: 0 3rem 3rem 0;
+
+      @include respond(phone) {
+        margin-right: 2rem;
+      }
     }
   }
 
@@ -166,23 +208,51 @@
     &--left-1,
     &--left-3 {
       width: 70%;
+
+      @include respond(phone) {
+        width: 100%;
+        padding-bottom: 1rem;
+      }
     }
 
     &--right-2,
     &--right-4 {
       width: 70%;
+
+      @include respond(tab-port) {
+        padding-left: 1rem;
+      }
+
+      @include respond(phone) {
+        width: 100%;
+        padding-bottom: 1rem;
+      }
     }
 
     &--left-2,
     &--left-4 {
       width: 30%;
       clip-path: circle(70.2% at 0% 50%);
+
+      @include respond(phone) {
+        width: 100%;
+        height: 16rem;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        border-radius: 0 2rem 0 0;
+      }
     }
 
     &--right-1,
     &--right-3 {
       width: 30%;
       clip-path: circle(70.2% at 100% 50%);
+
+      @include respond(phone) {
+        width: 100%;
+        height: 16rem;
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+        border-radius: 2rem 0 0 0;
+      }
     }
   }
 

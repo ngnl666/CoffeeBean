@@ -8,6 +8,10 @@
 
 html {
   // desktop-first
+  @include respond(tab-horizontal) {
+    font-size: 100%; // 16px
+  }
+
   @include respond(tab-port) {
     font-size: 75%; // 12px
   }

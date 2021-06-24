@@ -11,12 +11,12 @@
       @content;
     }
   }
-  @if $breakpoint == tab-horizontal {
+  @if $breakpoint == tab-port {
     @media (max-width: 768px) {
       @content;
     }
   }
-  @if $breakpoint == tab-port {
+  @if $breakpoint == tab-horizontal {
     @media (max-width: 1024px) {
       @content;
     }

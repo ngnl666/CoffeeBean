@@ -107,9 +107,16 @@ export default {};
   }
 
   &-caption {
-    position: absolute;
     @include absCenter;
     background-color: rgba($color-black, 0.5);
+
+    @include respond(tab-port) {
+      width: 50%;
+    }
+
+    @include respond(phone) {
+      width: 80%;
+    }
 
     &-3 {
       padding: 1rem !important;
@@ -119,6 +126,10 @@ export default {};
       font-size: $font-xl;
       margin-bottom: 3rem;
       letter-spacing: 5px;
+
+      @include respond(phone) {
+        margin: 1rem;
+      }
     }
 
     p {
@@ -129,6 +140,10 @@ export default {};
       color: $color-green;
       font-weight: bold;
       padding: 0 3px;
+
+      @include respond(phone) {
+        padding: 0 0.5rem;
+      }
     }
 
     &-text {

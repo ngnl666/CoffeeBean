@@ -89,6 +89,16 @@ export default {
   position: relative;
   overflow: hidden;
 
+  @include respond(tab-port) {
+    width: 22rem;
+    height: 32rem;
+  }
+
+  @include respond(phone) {
+    width: 100%;
+    height: auto;
+  }
+
   &__fav {
     width: 60px;
     height: 85px;
@@ -99,6 +109,10 @@ export default {
     z-index: 9;
     clip-path: polygon(85% 65%, 50% 100%, 15% 65%, 14% 0, 50% 0%, 85% 0);
     transition: all 0.5s;
+
+    @include respond(phone) {
+      height: 75px;
+    }
 
     &:hover {
       top: 0px;
@@ -111,12 +125,34 @@ export default {
       right: 1.05rem;
       top: 1.15rem;
 
+      @include respond(tab-port) {
+        font-size: $font-l;
+        right: 1.3rem;
+        top: 1.8rem;
+      }
+
+      @include respond(phone) {
+        right: 1.8rem;
+        top: 2rem;
+      }
+
       &ed {
         font-size: $font-m;
         position: absolute;
         right: 1.05rem;
         top: 1.15rem;
         color: yellow;
+
+        @include respond(tab-port) {
+          font-size: $font-l;
+          right: 1.3rem;
+          top: 1.8rem;
+        }
+
+        @include respond(phone) {
+          right: 1.8rem;
+          top: 2rem;
+        }
       }
     }
   }
@@ -145,6 +181,10 @@ export default {
     transform: translate(-50%, 0%);
     transition: all 0.5s;
     backface-visibility: hidden;
+
+    @include respond(phone) {
+      font-size: $font-l;
+    }
   }
 
   &__link {
@@ -175,6 +215,10 @@ export default {
     color: $color-primary;
     text-align: center;
     letter-spacing: 3px;
+
+    @include respond(phone) {
+      font-size: $font-l;
+    }
   }
 
   &__origin {
@@ -182,12 +226,20 @@ export default {
     font-size: $font-s;
     padding-left: 1rem;
     text-decoration: line-through;
+
+    @include respond(phone) {
+      font-size: $font-m;
+    }
   }
 
   &__price {
     font-size: $font-m;
     color: $color-green;
     text-align: center;
+
+    @include respond(phone) {
+      font-size: $font-l;
+    }
   }
 
   &__icon {
@@ -196,6 +248,10 @@ export default {
     bottom: 1rem;
     font-size: $font-m;
     color: $color-blue;
+
+    @include respond(phone) {
+      font-size: $font-l;
+    }
   }
 }
 </style>

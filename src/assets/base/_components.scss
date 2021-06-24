@@ -4,9 +4,14 @@
   border: 0;
   border-radius: 10px;
   padding: 1rem 1.25rem;
-  font-size: 1rem;
+  font-size: $font-s;
   letter-spacing: 5px;
   transition: all 0.25s;
+
+  @include respond(phone) {
+    padding: 1.5rem 2.25rem;
+    font-size: $font-m;
+  }
 
   &:active {
     transform: translateY(5px);

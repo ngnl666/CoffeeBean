@@ -1,10 +1,23 @@
 <template>
-  <div class="navigation" :class="{ 'navigation-color': bgActive }">
-    <h1 class="navigation__box">
-      <router-link to="/" class="navigation__logo">CoffeeBean</router-link>
-    </h1>
+  <div class="navigation" :class="{ 'navigation-color': bgActive || display }">
+    <div class="navigation__box">
+      <h1 class="navigation__title">
+        <router-link to="/" class="navigation__logo">CoffeeBean</router-link>
+      </h1>
 
-    <ul class="navigation__list">
+      <a
+        @click.prevent="display = !display"
+        href="#"
+        :class="{ rotate: display }"
+        class="navigation__link navigation__link--toggle"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </a>
+    </div>
+
+    <ul :class="{ display: display }" class="navigation__list">
       <li>
         <router-link to="/" class="navigation__link hvr-underline-from-center"
           >HOME</router-link
@@ -41,7 +54,9 @@ import { mapGetters, mapState } from 'vuex';
 
 export default {
   data() {
-    return {};
+    return {
+      display: false,
+    };
   },
   computed: {
     ...mapState('moduleFrontPage', ['bgActive']),
@@ -67,8 +82,14 @@ export default {
   z-index: 99;
   transition: 0.5s;
 
-  @include respond(tab-port) {
-    // width: 95%;
+  @include respond(phone) {
+    padding: 0.75rem 0 0.35rem 1rem;
+    display: block;
+  }
+
+  &__box {
+    display: flex;
+    justify-content: space-between;
   }
 
   &-color {
@@ -78,11 +99,26 @@ export default {
   &__logo {
     font-family: 'Alex Brush', cursive;
     color: $color-white;
+
+    @include respond(phone) {
+      font-size: $font-xl;
+    }
   }
 
   &__list {
     display: flex;
     padding-right: 1rem;
+
+    @include respond(phone) {
+      max-height: 0px;
+      overflow: hidden;
+    }
+
+    li {
+      @include respond(phone) {
+        margin-bottom: 0.5rem;
+      }
+    }
   }
 
   &__link {
@@ -101,9 +137,48 @@ export default {
 
     &--pick {
       margin-right: 2rem;
-      transition: 0.75s;
+      transition: 0.5s;
       &:hover {
         transform: rotateY(180deg);
+
+        @include respond(phone) {
+          transform: translateX(10px);
+        }
+      }
+    }
+
+    &--toggle {
+      width: 3.75rem;
+      height: 3rem;
+      border: 2px solid $color-white;
+      border-radius: 5px;
+      position: relative;
+      cursor: pointer;
+      display: none;
+
+      @include respond(phone) {
+        display: block;
+      }
+
+      > span {
+        width: 1.5rem;
+        height: 2px;
+        background-color: $color-white;
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+        margin: auto;
+        transition: all 0.5s;
+      }
+
+      > span:nth-child(1) {
+        transform: translateY(0.5rem);
+      }
+
+      > span:nth-child(3) {
+        transform: translateY(-0.5rem);
       }
     }
   }
@@ -121,14 +196,23 @@ export default {
   }
 }
 
-@keyframes flip {
-  0% {
-    opacity: 0;
-    bottom: 4%;
+.display {
+  display: block;
+  max-height: 107px;
+  transition: all 0.5s;
+}
+
+.rotate {
+  > span:nth-child(1) {
+    transform: rotate(220deg);
   }
-  100% {
-    opacity: 1;
-    bottom: 7%;
+
+  > span:nth-child(2) {
+    opacity: 0;
+  }
+
+  > span:nth-child(3) {
+    transform: rotate(-220deg);
   }
 }
 </style>

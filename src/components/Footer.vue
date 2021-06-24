@@ -53,6 +53,10 @@ export default {};
     font-size: $font-xl;
     text-align: center;
     margin-bottom: 2rem;
+
+    @include respond(phone) {
+      font-size: calc(#{$font-xl} * 1.25);
+    }
   }
 
   &__media {
@@ -66,6 +70,10 @@ export default {};
     font-size: $font-m;
     margin-right: 2rem;
     color: #4f4f4f;
+
+    @include respond(phone) {
+      font-size: $font-l;
+    }
   }
 
   &__copyright {
