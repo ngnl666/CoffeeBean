@@ -18,6 +18,11 @@
     border-radius: 10px;
     position: relative;
 
+    @include respond(phone) {
+      width: 14rem;
+      height: 20rem;
+    }
+
     &-1:hover,
     &-2:hover,
     &-3:hover {
@@ -33,6 +38,10 @@
     }
     &-3 {
       animation: bounce-down 1.6s linear infinite 1s;
+
+      @include respond(phone) {
+        display: none;
+      }
     }
   }
 

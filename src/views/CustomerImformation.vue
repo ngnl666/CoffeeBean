@@ -1,9 +1,9 @@
 <template>
   <Alert v-if="isAlert" />
   <div class="userinfo mb-3">
-    <div class="userinfo__input-group col-6 me-5">
+    <div class="userinfo__input-group col-12 col-md-6 me-5">
       <Form v-slot="{ errors }">
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-4">
           <Field
             type="text"
             class="form-control"
@@ -18,7 +18,7 @@
           <ErrorMessage class="text-danger" name="name" />
           <label for="name">姓名</label>
         </div>
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-4">
           <Field
             type="number"
             class="form-control"
@@ -33,7 +33,7 @@
           <ErrorMessage class="text-danger" name="tel" />
           <label for="tel">電話</label>
         </div>
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-4">
           <Field
             type="email"
             class="form-control"
@@ -48,7 +48,7 @@
           <ErrorMessage class="text-danger" name="email" />
           <label for="email">電子信箱</label>
         </div>
-        <div class="form-floating mb-3">
+        <div class="form-floating mb-4">
           <Field
             type="text"
             class="form-control"
@@ -76,7 +76,7 @@
           <option value="ATM轉帳">ATM 轉帳</option>
         </Field>
         <ErrorMessage class="text-danger" name="paid" />
-        <div class="input-group my-3">
+        <div class="input-group my-5">
           <input v-model="code" type="text" class="form-control" />
           <button
             @click="useCoupon()"
@@ -90,35 +90,36 @@
     </div>
 
     <div class="userinfo__paid">
-      <p class="userinfo__title fs-5 fw-bolder text-center">
+      <p class="userinfo__title fw-bolder text-center">
         <i class="fas fa-shopping-cart me-2"></i>購物清單
       </p>
       <table class="table">
         <tr v-for="item in carts" :key="item.id">
-          <td style="height: 35px">
+          <td style="height: 35px" class="userinfo__item text-center">
             {{ item.product.title }} {{ item.total }}
           </td>
         </tr>
       </table>
       <p
-        class="userinfo__coupon text-center text-success fw-bolder fs-4"
+        class="userinfo__coupon text-center text-success fw-bolder"
         v-if="isUsed"
       >
         <i class="fas fa-ticket-alt me-1"></i>{{ couponCode }}
       </p>
       <p
-        class="userinfo__coupon text-center text-success fw-bolder fs-4"
+        class="userinfo__coupon text-center text-success fw-bolder"
         v-if="isUsed"
       >
         ({{ discount }})
       </p>
-      <p class="userinfo__total text-start text-dark fw-bolder fs-5 pt-1">
-        總金額
-      </p>
-      <p v-if="isUsed" class="text-center text-danger fw-bolder fs-4">
+      <p class="userinfo__total text-start text-dark fw-bolder pt-1">總金額</p>
+      <p
+        v-if="isUsed"
+        class="userinfo__price text-center text-danger fw-bolder"
+      >
         {{ finalTotal }}元
       </p>
-      <p v-else class="text-center text-danger fw-bolder fs-4">
+      <p v-else class="userinfo__price text-center text-danger fw-bolder">
         {{ totalPrice }}元
       </p>
     </div>
@@ -258,19 +259,46 @@ export default {
 
 <style lang="scss">
 @import '../assets/abstracts/variables';
+@import '../assets/abstracts/mixins';
 
 .userinfo {
   display: flex;
+
+  @include respond(phone) {
+    display: block;
+  }
 
   &__paid {
     padding: 0.5rem 2rem;
     width: 40%;
     border: 2px solid $color-primary;
     border-radius: 1rem;
+
+    @include respond(phone) {
+      width: 95%;
+      margin: 0 auto 2rem auto;
+    }
   }
 
   &__title {
     color: #694220;
+  }
+
+  &__item {
+    @include respond(phone) {
+      font-size: $font-m;
+    }
+  }
+
+  &__title,
+  &__coupon,
+  &__total,
+  &__price {
+    font-size: $font-m;
+
+    @include respond(phone) {
+      font-size: $font-l;
+    }
   }
 }
 </style>

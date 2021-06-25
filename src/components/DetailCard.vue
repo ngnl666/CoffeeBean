@@ -108,6 +108,7 @@ export default {
   data() {
     return {
       productQuantity: 1,
+      randomNum: 3,
       breadcrumbList: [],
       randomProducts: [],
       isAnimation: false,
@@ -123,6 +124,9 @@ export default {
   watch: {
     currentProduct(val) {
       if (val) this.createRandomProducts();
+    },
+    randomNum() {
+      this.createRandomProducts();
     },
   },
   methods: {
@@ -150,7 +154,7 @@ export default {
       this.randomProducts = [];
       this.productQuantity = 1;
 
-      while (this.randomProducts.length < 3) {
+      while (this.randomProducts.length < this.randomNum) {
         rNum = Math.floor(Math.random() * this.products.length);
         if (
           this.products[rNum].id !== this.currentProduct.id &&
@@ -163,6 +167,8 @@ export default {
     },
   },
   mounted() {
+    if (document.body.clientWidth < 769) this.randomNum = 2;
+    if (document.body.clientWidth < 577) this.randomNum = 1;
     this.createRandomProducts();
   },
   created() {
@@ -202,8 +208,18 @@ export default {
     box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
     display: flex;
 
+    @include respond(phone) {
+      width: 30rem;
+      height: auto;
+      display: block;
+    }
+
     &--left {
       flex-basis: 60%;
+
+      @include respond(phone) {
+        width: 50%;
+      }
     }
 
     &--right {
@@ -215,10 +231,19 @@ export default {
   &__img {
     width: 100%;
     height: 90%;
+
+    @include respond(phone) {
+      width: 200%;
+      height: 250px;
+    }
   }
 
   &__group {
     display: flex;
+
+    @include respond(phone) {
+      width: 200%;
+    }
   }
 
   &__input {
@@ -233,10 +258,19 @@ export default {
     letter-spacing: 5px;
     padding-top: 1.5rem;
     margin-bottom: 5rem;
+
+    @include respond(phone) {
+      font-size: $font-xl;
+      margin-bottom: 2.5rem;
+    }
   }
 
   &__detail {
     margin-bottom: 3rem;
+
+    @include respond(phone) {
+      margin-bottom: 1.5rem;
+    }
   }
 
   &__description {
@@ -248,12 +282,20 @@ export default {
     font-size: $font-s;
     padding-left: 1rem;
     text-decoration: line-through;
+
+    @include respond(phone) {
+      font-size: $font-m;
+    }
   }
 
   &__price {
     font-size: $font-l;
     color: $color-green;
     text-align: center;
+
+    @include respond(phone) {
+      font-size: $font-xl;
+    }
   }
 
   &__cart {
@@ -272,11 +314,20 @@ export default {
     font-size: $font-m;
     letter-spacing: 3px;
     text-align: center;
+
+    @include respond(tab-port) {
+      margin-bottom: 2.5rem;
+    }
   }
 
   &__products {
     display: flex;
     justify-content: space-around;
+
+    @include respond(phone) {
+      justify-content: center;
+      padding-left: 2rem;
+    }
   }
 }
 

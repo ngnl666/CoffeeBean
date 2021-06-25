@@ -193,6 +193,12 @@ export default {
     position: absolute;
     top: 0px;
     right: -10px;
+
+    @include respond(phone) {
+      width: 1.8rem;
+      height: 1.8rem;
+      left: 2rem;
+    }
   }
 }
 

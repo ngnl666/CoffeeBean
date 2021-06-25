@@ -89,6 +89,11 @@ export default {
   position: relative;
   overflow: hidden;
 
+  @include respond(tab-horizontal) {
+    width: 16.5rem;
+    height: 27rem;
+  }
+
   @include respond(tab-port) {
     width: 22rem;
     height: 32rem;

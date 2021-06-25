@@ -17,7 +17,7 @@
       我的優惠券
     </button>
     <div class="row justify-content-center">
-      <div class="collapse col-6 mb-4" id="collapseExample">
+      <div class="collapse col-lg-6 col-md-8 mb-4" id="collapseExample">
         <div class="list-group" v-for="coupon in myCoupons" :key="coupon.code">
           <a
             href="#"

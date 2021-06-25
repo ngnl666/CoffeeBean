@@ -12,7 +12,16 @@
     <tbody>
       <tr v-for="item in myCart" :key="item.product_id">
         <th class="fs-6" scope="row">{{ item.title }}</th>
-        <td>{{ item.qty }} {{ item.unit }}</td>
+        <td>
+          <input
+            type="number"
+            v-model="item.qty"
+            class="form-control"
+            style="50px"
+          />
+          <!--綁定後在每次更改數字時呼叫 setTempCart(state, payload, change)-->
+          {{ item.unit }}
+        </td>
         <td>${{ item.price * item.qty }}</td>
         <td>
           <button @click="deleteItem(item.product_id)" class="btn btn-danger">

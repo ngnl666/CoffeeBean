@@ -1,6 +1,6 @@
 <template>
   <Alert v-if="isAlert" />
-  <table class="table table-striped table-hover mb-5">
+  <table class="table table-striped table-hover mb-5 my-4">
     <thead>
       <tr class="fs-5">
         <th width="200px" scope="col">訂購時間</th>
@@ -17,7 +17,7 @@
     </tbody>
   </table>
 
-  <p class="text-success fs-5 fw-bold">
+  <p class="text-success fs-5 fw-bold my-4">
     <i class="fas fa-info-circle me-2"></i>收件人資訊
   </p>
   <table class="table table-striped table-hover mb-5" v-if="order?.user">
@@ -76,8 +76,10 @@ export default {
   },
   created() {
     const vm = this;
-    setTimeout(() => vm.getOrder(this.orderId), 1000);
-    vm.setButtonEnabled(true);
+    setTimeout(() => {
+      vm.getOrder(this.orderId);
+      vm.setButtonEnabled(true);
+    }, 1000);
   },
 };
 </script>
