@@ -156,7 +156,8 @@ const moduleFrontPage = {
     setTempCart(state, payload) {
       if (state.tempCart.get(payload.product_id)) {
         let qty = state.tempCart.get(payload.product_id);
-        qty += payload.qty;
+        payload?.change ? (qty = payload.qty) : (qty += payload.qty);
+
         state.tempCart.set(payload.product_id, qty);
         localStorage.setItem(
           'storageCart',
