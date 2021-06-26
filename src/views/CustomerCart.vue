@@ -3,8 +3,8 @@
   <table class="table table-striped table-hover" v-if="myCart.length">
     <thead>
       <tr class="fs-5">
-        <th width="300px" scope="col">商品</th>
-        <th width="180px" scope="col">數量</th>
+        <th width="250px" scope="col">商品</th>
+        <th width="230px" scope="col">數量</th>
         <th width="180px" scope="col">價格</th>
         <th width="100px" scope="col">刪除</th>
       </tr>
@@ -13,14 +13,27 @@
       <tr v-for="item in myCart" :key="item.product_id">
         <th class="fs-6" scope="row">{{ item.title }}</th>
         <td>
-          <input
-            type="number"
-            v-model="item.qty"
-            class="form-control"
-            style="50px"
-          />
-          <!--綁定後在每次更改數字時呼叫 setTempCart(state, payload, change)-->
-          {{ item.unit }}
+          <div class="input-group mb-3">
+            <button
+              @click="changeQty(item, '-')"
+              class="input-group-text btn btn-success"
+              :disabled="item.qty === 1"
+            >
+              <i class="input-append fas fa-minus"></i>
+            </button>
+            <input
+              type="text"
+              v-model="item.qty"
+              disabled
+              class="form-control text-center"
+            />
+            <button
+              @click="changeQty(item, '+')"
+              class="input-group-text btn btn-success"
+            >
+              <i class="input-append fas fa-plus"></i>
+            </button>
+          </div>
         </td>
         <td>${{ item.price * item.qty }}</td>
         <td>
@@ -72,7 +85,28 @@ export default {
   },
   methods: {
     ...mapActions('moduleFrontPage', ['deleteCartItem']),
-    ...mapMutations('moduleFrontPage', ['delTempCart', 'setButtonEnabled']),
+    ...mapMutations('moduleFrontPage', [
+      'delTempCart',
+      'setButtonEnabled',
+      'setTempCart',
+    ]),
+    changeQty(item, state) {
+      let qty = item.qty;
+      if (state === '-' && qty !== 1) {
+        this.setTempCart({
+          product_id: item.product_id,
+          qty: --qty,
+          change: true,
+        });
+      }
+      if (state === '+') {
+        this.setTempCart({
+          product_id: item.product_id,
+          qty: ++qty,
+          change: true,
+        });
+      }
+    },
     deleteItem(itemId) {
       this.delTempCart(itemId);
       this.deleteCartItem(itemId);
@@ -88,6 +122,11 @@ export default {
 .table > tbody > tr > td {
   vertical-align: middle;
 }
+
+.input-append {
+  color: #fff;
+}
+
 .returnBtn:hover {
   color: #fff;
 }
