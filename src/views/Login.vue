@@ -1,8 +1,5 @@
 <template>
   <Alert v-if="isAlert" />
-  <div class="text-center">e3e38888@gmail.com</div>
-  <div class="text-center">asdf5678</div>
-
   <form @submit.prevent="signin">
     <div class="container">
       <div class="row justify-content-center mt-5 g-0">

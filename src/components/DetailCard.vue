@@ -97,7 +97,6 @@ import Alert from '../components/Alert.vue';
 import Navbar from '../components/Navbar.vue';
 import Footer from '../components/Footer.vue';
 import Card from '../components/Card.vue';
-
 export default {
   components: {
     Alert,
@@ -135,7 +134,6 @@ export default {
     ...mapMutations(['setIsAlert', 'setAlertMsg']),
     addToCart(cartItem) {
       const vm = this;
-
       this.setTempCart(cartItem);
       this.isAnimation = true;
       setTimeout(() => {
@@ -153,7 +151,6 @@ export default {
         rArray = [];
       this.randomProducts = [];
       this.productQuantity = 1;
-
       while (this.randomProducts.length < this.randomNum) {
         rNum = Math.floor(Math.random() * this.products.length);
         if (
@@ -182,20 +179,16 @@ export default {
 @import '../assets/abstracts/variables';
 @import '../assets/abstracts/mixins';
 @import '../assets/base/components';
-
 .productDetail {
   padding: 5rem 3rem;
   background-color: $color-secondary;
-
   &__nav {
     padding-top: 1rem;
     margin-left: 1rem;
   }
-
   &__link {
     display: inline !important;
   }
-
   &__card {
     width: 50rem;
     height: 30rem;
@@ -207,50 +200,40 @@ export default {
     overflow: hidden;
     box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
     display: flex;
-
     @include respond(phone) {
       width: 30rem;
       height: auto;
       display: block;
     }
-
     &--left {
       flex-basis: 60%;
-
       @include respond(phone) {
         width: 50%;
       }
     }
-
     &--right {
       flex-basis: 40%;
       padding: 1.5rem 1rem;
     }
   }
-
   &__img {
     width: 100%;
     height: 90%;
-
     @include respond(phone) {
       width: 200%;
       height: 250px;
     }
   }
-
   &__group {
     display: flex;
-
     @include respond(phone) {
       width: 200%;
     }
   }
-
   &__input {
     margin: 0 auto;
     width: 100%;
   }
-
   &__name {
     color: $color-primary;
     font-size: $font-l;
@@ -258,100 +241,81 @@ export default {
     letter-spacing: 5px;
     padding-top: 1.5rem;
     margin-bottom: 5rem;
-
     @include respond(phone) {
       font-size: $font-xl;
       margin-bottom: 2.5rem;
     }
   }
-
   &__detail {
     margin-bottom: 3rem;
-
     @include respond(phone) {
       margin-bottom: 1.5rem;
     }
   }
-
   &__description {
     margin-bottom: 1rem;
   }
-
   &__origin {
     color: $color-grey;
     font-size: $font-s;
     padding-left: 1rem;
     text-decoration: line-through;
-
     @include respond(phone) {
       font-size: $font-m;
     }
   }
-
   &__price {
     font-size: $font-l;
     color: $color-green;
     text-align: center;
-
     @include respond(phone) {
       font-size: $font-xl;
     }
   }
-
   &__cart {
     background-color: $color-blue;
     color: $color-white;
     margin: 0 auto;
     overflow: hidden;
   }
-
   &__icon {
     text-align: center;
   }
-
   &__relateTitle {
     color: $color-blue;
     font-size: $font-m;
     letter-spacing: 3px;
     text-align: center;
-
     @include respond(tab-port) {
       margin-bottom: 2.5rem;
     }
   }
-
   &__products {
     display: flex;
     justify-content: space-around;
-
     @include respond(phone) {
       justify-content: center;
       padding-left: 2rem;
     }
   }
 }
-
 .myBtn {
   &--count {
     padding: 0.75rem 1rem;
     border-radius: 0px;
     background-color: $color-blue;
     color: $color-white;
-
     &:disabled {
       background-color: $color-grey;
     }
-
     &-r {
       border-radius: 0 0 10px 0;
     }
   }
 }
-
 .cartGoRight {
   animation: cartGoRight 1s;
 }
-
 @keyframes cartGoRight {
   100% {
     transform: translateX(99%);
