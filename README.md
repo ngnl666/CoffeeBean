@@ -56,7 +56,7 @@ Demo: https://ngnl666.github.io/CoffeeBean/#/
 
 ▪️ Intersection Observer API : Replace scroll event, bring more efficiency
 
-▪️ Return Guard : Use in IF statement
+▪️ Guard Clause : Use in IF statement
 
 ▪️ RWD : Responsive Website For Pad & Smartphone
 
