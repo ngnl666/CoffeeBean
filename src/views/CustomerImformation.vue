@@ -145,7 +145,6 @@ import { mapActions, mapMutations, mapState } from 'vuex';
 import { Form, Field, ErrorMessage, defineRule } from 'vee-validate';
 import { couponList } from '../couponList.js';
 import Alert from '../components/Alert.vue';
-
 defineRule('required', value => {
   if (!value || !value.length) {
     return '此欄位為必填';
@@ -178,7 +177,6 @@ defineRule('minMaxLength', (value, [min, max]) => {
   return true;
 });
 //////////////////////////////////////////////////////////////
-
 export default {
   components: {
     Form,
@@ -260,42 +258,34 @@ export default {
 <style lang="scss">
 @import '../assets/abstracts/variables';
 @import '../assets/abstracts/mixins';
-
 .userinfo {
   display: flex;
-
   @include respond(phone) {
     display: block;
   }
-
   &__paid {
     padding: 0.5rem 2rem;
     width: 40%;
     border: 2px solid $color-primary;
     border-radius: 1rem;
-
     @include respond(phone) {
       width: 95%;
       margin: 0 auto 2rem auto;
     }
   }
-
   &__title {
     color: #694220;
   }
-
   &__item {
     @include respond(phone) {
       font-size: $font-m;
     }
   }
-
   &__title,
   &__coupon,
   &__total,
   &__price {
     font-size: $font-m;
-
     @include respond(phone) {
       font-size: $font-l;
     }

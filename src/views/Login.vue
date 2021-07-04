@@ -25,7 +25,7 @@
               ></span>
               <input
                 v-model="user.password"
-                type="text"
+                type="password"
                 class="form-control"
                 placeholder="密碼"
               />

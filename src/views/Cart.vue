@@ -48,7 +48,6 @@ import Footer from '../components/Footer.vue';
 import CustomerCart from '../views/CustomerCart.vue';
 import CustomerImformation from '../views/CustomerImformation.vue';
 import CustomerOrder from '../views/CustomerOrder.vue';
-
 export default {
   components: {
     Loading,
@@ -84,7 +83,6 @@ export default {
     ...mapGetters('moduleFrontPage', ['myCart']),
     curUrl() {
       let routerName;
-
       switch (this.$route.name) {
         case 'CustomerCart':
           routerName = '確認商品';
