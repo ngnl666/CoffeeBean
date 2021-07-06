@@ -19,11 +19,7 @@
       </div>
 
       <div class="cart__customerCart">
-        <CustomerCart v-if="this.$route.name === 'CustomerCart'" />
-        <CustomerImformation
-          v-if="this.$route.name === 'CustomerImformation'"
-        />
-        <CustomerOrder v-if="this.$route.name === 'CustomerOrder'" />
+        <router-view></router-view>
       </div>
       <div class="cart__btn">
         <router-link
@@ -45,17 +41,11 @@ import Loading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
 import Navbar from '../components/Navbar.vue';
 import Footer from '../components/Footer.vue';
-import CustomerCart from '../views/CustomerCart.vue';
-import CustomerImformation from '../views/CustomerImformation.vue';
-import CustomerOrder from '../views/CustomerOrder.vue';
 export default {
   components: {
     Loading,
     Navbar,
     Footer,
-    CustomerCart,
-    CustomerImformation,
-    CustomerOrder,
   },
   data() {
     return {
