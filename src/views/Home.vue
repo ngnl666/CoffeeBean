@@ -12,21 +12,19 @@
           <div class="intro__pic">
             <img src="../assets/image/intro-1.jpg" alt="coffeBean" />
           </div>
-          <p class="intro__in">來自咖啡發源地的中南美洲以及非洲的咖啡豆</p>
+          <p class="intro__in">來自咖啡發源地的咖啡豆</p>
         </li>
         <li class="intro__section-2">
           <div class="intro__pic">
             <img src="../assets/image/intro-2.jpg" alt="coffeBean" />
           </div>
-          <p class="intro__in">
-            使用品質最好的鮮乳，在高溫加熱下呈現出最完美的奶泡
-          </p>
+          <p class="intro__in">品質最好的鮮乳，呈現出最完美的奶泡</p>
         </li>
         <li ref="intro__section3" class="intro__section-3 hidden-3">
           <div class="intro__pic">
             <img src="../assets/image/intro-3.jpg" alt="coffeBean" />
           </div>
-          <p class="intro__in">專業級義式咖啡機萃取出香氣迷人的 Espresso</p>
+          <p class="intro__in">專業級義式咖啡機</p>
         </li>
       </ul>
     </section>
@@ -133,7 +131,7 @@ export default {
   methods: {
     ...mapMutations('moduleFrontPage', ['setBgActive']),
     handleScroll() {
-      this.bgActive = window.scrollY > 0 ? true : false;
+      this.bgActive = window.scrollY > 0;
       this.setBgActive(this.bgActive);
     },
     handleIntro(entry, observer) {

@@ -9,7 +9,9 @@
 
     <ul class="navbar-nav px-3">
       <li class="nav-item text-nowrap">
-        <a class="btn btn-outline-light" @click.prevent="signout">登出</a>
+        <a class="btn btn-outline-light" href="#" @click.prevent="signout"
+          >登出</a
+        >
       </li>
     </ul>
   </header>
@@ -75,7 +77,7 @@ export default {
       const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/logout`;
 
-      this.$http
+      vm.$http
         .post(api)
         .then(res => {
           if (!res.data.success) {

@@ -21,64 +21,81 @@
       </ol>
     </nav>
 
-    <div class="productDetail__card">
-      <div class="productDetail__card--left">
-        <img
-          class="productDetail__img"
-          :src="currentProduct.imageUrl"
-          alt="coffeebean"
-        />
-        <div class="productDetail__group">
-          <button
-            @click="productQuantity--"
-            :disabled="productQuantity === 1"
-            class="myBtn myBtn--count"
-          >
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <input
-            v-model="productQuantity"
-            class="myInput productDetail__input"
-            type="number"
-            disabled
+    <div class="productDetail__wrap">
+      <div class="productDetail__card">
+        <div class="productDetail__card--left">
+          <img
+            class="productDetail__img"
+            :src="currentProduct.imageUrl"
+            alt="coffeebean"
           />
+          <div class="productDetail__group">
+            <button
+              @click="productQuantity--"
+              :disabled="productQuantity === 1"
+              class="myBtn myBtn--count"
+            >
+              <i class="fas fa-chevron-left"></i>
+            </button>
+            <input
+              v-model="productQuantity"
+              class="myInput productDetail__input"
+              type="number"
+              disabled
+            />
+            <button
+              @click="productQuantity++"
+              :disabled="productQuantity === 10"
+              class="myBtn myBtn--count myBtn--count-r"
+            >
+              <i class="fas fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+        <div class="productDetail__card--right">
+          <h3 class="productDetail__name">{{ currentProduct.title }}</h3>
+          <p class="productDetail__detail">
+            {{ currentProduct.description }}
+          </p>
+          <div class="productDetail__description">
+            <div
+              v-if="
+                currentProduct.original_price &&
+                currentProduct.original_price > 0
+              "
+              class="productDetail__origin"
+            >
+              $ {{ currentProduct.original_price }}
+            </div>
+            <div class="productDetail__price">$ {{ currentProduct.price }}</div>
+          </div>
           <button
-            @click="productQuantity++"
-            :disabled="productQuantity === 10"
-            class="myBtn myBtn--count myBtn--count-r"
+            @click="
+              addToCart({ product_id: currentProduct.id, qty: productQuantity })
+            "
+            class="myBtn productDetail__cart"
           >
-            <i class="fas fa-chevron-right"></i>
+            <i
+              :class="{ cartGoRight: isAnimation }"
+              class="productDetail__icon fas fa-shopping-cart"
+              >加到購物車</i
+            >
           </button>
         </div>
       </div>
-      <div class="productDetail__card--right">
-        <h3 class="productDetail__name">{{ currentProduct.title }}</h3>
-        <p class="productDetail__detail">
-          {{ currentProduct.description }}
-        </p>
-        <div class="productDetail__description">
-          <div
-            v-if="
-              currentProduct.original_price && currentProduct.original_price > 0
-            "
-            class="productDetail__origin"
-          >
-            $ {{ currentProduct.original_price }}
-          </div>
-          <div class="productDetail__price">$ {{ currentProduct.price }}</div>
+
+      <!-- 熱量表 -->
+      <div class="card text-center" style="width: 18rem">
+        <div class="card-header">熱量表</div>
+        <div class="card-body">
+          <h5 class="card-title">Special title treatment</h5>
+          <p class="card-text">
+            With supporting text below as a natural lead-in to additional
+            content.
+          </p>
+          <a href="#" class="btn btn-primary">Go somewhere</a>
         </div>
-        <button
-          @click="
-            addToCart({ product_id: currentProduct.id, qty: productQuantity })
-          "
-          class="myBtn productDetail__cart"
-        >
-          <i
-            :class="{ cartGoRight: isAnimation }"
-            class="productDetail__icon fas fa-shopping-cart"
-            >加到購物車</i
-          >
-        </button>
+        <div class="card-footer text-muted">2 days ago</div>
       </div>
     </div>
 
@@ -143,12 +160,12 @@ export default {
       this.setIsAlert();
     },
     handleScroll() {
-      this.bgActive = window.scrollY > 0 ? true : false;
+      this.bgActive = window.scrollY > 0;
       this.setBgActive(this.bgActive);
     },
     createRandomProducts() {
-      let rNum,
-        rArray = [];
+      let rNum;
+      const rArray = [];
       this.randomProducts = [];
       this.productQuantity = 1;
       while (this.randomProducts.length < this.randomNum) {
@@ -189,6 +206,9 @@ export default {
   &__link {
     display: inline !important;
   }
+  &__wrap {
+    display: flex;
+  }
   &__card {
     width: 50rem;
     height: 30rem;
@@ -198,7 +218,7 @@ export default {
     margin-bottom: 5rem;
     border-radius: 1rem;
     overflow: hidden;
-    box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+    box-shadow: 0 1rem 1rem rgba($color-primary, 0.4);
     display: flex;
     @include respond(phone) {
       width: 30rem;

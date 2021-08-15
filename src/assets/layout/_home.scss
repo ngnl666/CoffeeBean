@@ -24,7 +24,7 @@
 }
 
 .intro {
-  padding: 3rem 7rem;
+  padding: 3rem 12rem;
   margin-bottom: 4rem;
 
   @include respond(tab-horizontal) {
@@ -114,7 +114,7 @@
     background-color: $color-tertiary;
     display: flex;
     margin-bottom: 4rem;
-    box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+    box-shadow: 0 1rem 1rem rgba($color-primary, 0.4);
 
     @include respond(phone) {
       height: auto;
@@ -169,7 +169,7 @@
 
   &__description {
     color: $color-white;
-    font-size: $font-m;
+    font-size: calc(#{$font-m} * 0.8);
     letter-spacing: 3px;
 
     &-1,

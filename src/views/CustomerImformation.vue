@@ -127,15 +127,16 @@
 
   <div class="userinfo__comment">
     <div class="form-floating">
-      <textarea
-        class="form-control"
-        autocomplete="off"
-        placeholder="留言備註"
-        id="floatingTextarea2"
-        style="height: 100px"
-        v-model="form.message"
-      ></textarea>
-      <label for="floatingTextarea2">留言備註</label>
+      <form>
+        <textarea
+          class="form-control"
+          autocomplete="off"
+          placeholder="留言備註"
+          id="floatingTextarea2"
+          style="height: 100px"
+          v-model="form.message"
+        ></textarea>
+      </form>
     </div>
   </div>
 </template>
@@ -143,7 +144,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from 'vuex';
 import { Form, Field, ErrorMessage, defineRule } from 'vee-validate';
-import { couponList } from '../couponList.js';
+import { couponList } from '../assets/couponList.js';
 import Alert from '../components/Alert.vue';
 defineRule('required', value => {
   if (!value || !value.length) {
@@ -176,7 +177,7 @@ defineRule('minMaxLength', (value, [min, max]) => {
   }
   return true;
 });
-//////////////////////////////////////////////////////////////
+/// ///////////////////////////////////////////////////////////
 export default {
   components: {
     Form,

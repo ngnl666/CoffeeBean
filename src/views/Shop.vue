@@ -201,7 +201,7 @@ export default {
     ...mapActions('moduleFrontPage', ['getProducts']),
     ...mapMutations('moduleFrontPage', ['setBgActive', 'setPagination']),
     handleScroll() {
-      this.bgActive = window.scrollY > 0 ? true : false;
+      this.bgActive = window.scrollY > 0;
       this.setBgActive(this.bgActive);
     },
   },

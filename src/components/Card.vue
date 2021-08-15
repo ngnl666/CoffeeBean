@@ -12,28 +12,33 @@
         class="fas fa-star productCard__fav--stared"
       ></i>
     </div>
+    <router-link :to="`/detail/${product.id}`">
+      <figure class="productCard__shape">
+        <img
+          :src="product.imageUrl"
+          class="productCard__img"
+          alt="coffeebean"
+        />
+        <figcaption class="productCard__caption">
+          <router-link :to="`/detail/${product.id}`" class="productCard__link"
+            >商品詳情</router-link
+          >
+        </figcaption>
+      </figure>
 
-    <figure class="productCard__shape">
-      <img :src="product.imageUrl" class="productCard__img" alt="coffeebean" />
-      <figcaption class="productCard__caption">
-        <router-link :to="`/detail/${product.id}`" class="productCard__link"
-          >商品詳情</router-link
+      <p class="productCard__name">{{ product.title }}</p>
+      <div class="productCard__description">
+        <div
+          :class="{
+            hidden: !product.original_price || !product.original_price > 0,
+          }"
+          class="productCard__origin"
         >
-      </figcaption>
-    </figure>
-
-    <p class="productCard__name">{{ product.title }}</p>
-    <div class="productCard__description">
-      <div
-        :class="{
-          hidden: !product.original_price || !product.original_price > 0,
-        }"
-        class="productCard__origin"
-      >
-        ${{ product.original_price }}
+          ${{ product.original_price }}
+        </div>
+        <div class="productCard__price">${{ product.price }}</div>
       </div>
-      <div class="productCard__price">${{ product.price }}</div>
-    </div>
+    </router-link>
 
     <div class="productCard__cart">
       <i
@@ -85,7 +90,7 @@ export default {
   margin-bottom: 2rem;
   margin-right: 2rem;
   border-radius: 15px;
-  box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+  box-shadow: 0 1rem 1rem rgba($color-primary, 0.3);
   position: relative;
   overflow: hidden;
 
@@ -107,13 +112,13 @@ export default {
   &__fav {
     width: 60px;
     height: 85px;
-    background-color: $color-yellow;
+    background-color: $color-primary;
     position: absolute;
     right: 0.5rem;
-    top: -15px;
+    top: -5px;
     z-index: 9;
-    clip-path: polygon(85% 65%, 50% 100%, 15% 65%, 14% 0, 50% 0%, 85% 0);
-    transition: all 0.5s;
+    clip-path: polygon(61% 84%, 40% 84%, 15% 65%, 15% 0, 85% 0, 85% 65%);
+    transition: all 0.25s;
 
     @include respond(phone) {
       height: 75px;
@@ -146,7 +151,7 @@ export default {
         position: absolute;
         right: 1.05rem;
         top: 1.15rem;
-        color: yellow;
+        color: $color-white;
 
         @include respond(tab-port) {
           font-size: $font-l;

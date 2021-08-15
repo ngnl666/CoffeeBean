@@ -8,6 +8,12 @@ const moduleAdmin = {
     products: [],
     coupons: [],
     orders: [],
+    tempProduct: {
+      imageUrl: '',
+    },
+    isNew: false,
+    showProductModal: false,
+    showDelModal: false,
   }),
   mutations: {
     setProducts(state, payload) {
@@ -18,6 +24,18 @@ const moduleAdmin = {
     },
     setOrders(state, payload) {
       state.orders = payload;
+    },
+    setTempProduct(state, payload) {
+      state.tempProduct = payload;
+    },
+    setIsNew(state, payload) {
+      state.isNew = payload;
+    },
+    setShowDelModal(state, payload) {
+      state.showDelModal = payload;
+    },
+    setShowProductModal(state, payload) {
+      state.showProductModal = payload;
     },
   },
   actions: {

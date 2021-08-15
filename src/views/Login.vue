@@ -65,10 +65,10 @@ export default {
   methods: {
     ...mapMutations(['setIsAlert', 'setAlertMsg']),
     signin() {
+      const vm = this;
       const api = `${process.env.VUE_APP_APIPATH}/admin/signin`;
-      var vm = this;
 
-      this.$http
+      vm.$http
         .post(api, vm.user)
         .then(res => {
           if (!res.data.success) {

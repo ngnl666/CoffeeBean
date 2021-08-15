@@ -82,7 +82,7 @@ export default {
   methods: {
     ...mapActions('moduleFrontPage', ['getProducts']),
     handleScroll() {
-      this.bgActive = window.scrollY > 0 ? true : false;
+      this.bgActive = window.scrollY > 0;
       this.setBgActive(this.bgActive);
     },
   },

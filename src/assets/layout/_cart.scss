@@ -3,6 +3,16 @@
   padding: 1.5rem 3rem;
   position: relative;
 
+  &__wrap {
+    height: 100vh;
+    @include respond(tab-port) {
+      height: 80vh;
+    }
+    @include respond(phone) {
+      height: 80vh;
+    }
+  }
+
   @include respond(phone) {
     padding: 1rem 1rem;
   }

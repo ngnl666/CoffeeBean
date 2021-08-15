@@ -72,7 +72,7 @@
 <script>
 import { Modal } from 'bootstrap';
 import { mapMutations, mapState } from 'vuex';
-import { couponList } from '../couponList.js';
+import { couponList } from '../assets/couponList.js';
 import Navbar from '../components/Navbar.vue';
 import Banner from '../components/Banner.vue';
 import Footer from '../components/Footer.vue';
